@@ -1,0 +1,61 @@
+{
+    "env": {
+        "projectDefines": [
+            "ARGPARSE_STATIC"
+        ],
+        "projectIncludes": [
+            "${workspaceFolder}/include",
+            "${workspaceFolder:libargparse}/include"
+        ]
+    },
+    "configurations": [{
+            "name": "Linux (debug)",
+            "includePath": [
+                "${env:projectIncludes}"
+            ],
+            "defines": [
+                "${env:projectDefines}",
+                "DEBUG"
+            ],
+            "compilerPath": "${config:CompilerPath_Linux}",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "linux-gcc-x64"
+        }, {
+            "name": "Linux (release)",
+            "includePath": [
+                "${env:projectIncludes}"
+            ],
+            "defines": [
+                "${env:projectDefines}",
+                "NDEBUG"
+            ],
+            "compilerPath": "${config:CompilerPath_Linux}",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "linux-gcc-x64"
+        }, {
+            "name": "Windows (debug)",
+            "includePath": [
+                "${env:projectIncludes}"
+            ],
+            "defines": [
+                "${env:projectDefines}",
+                "DEBUG"
+            ],
+            "compilerPath": "${config:CompilerPath_Windows}",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "windows-gcc-x64"
+        }, {
+            "name": "Windows (release)",
+            "includePath": [
+                "${env:projectIncludes}"
+            ],
+            "defines": [
+                "${env:projectDefines}",
+                "NDEBUG"
+            ],
+            "compilerPath": "${config:CompilerPath_Windows}",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "windows-gcc-x64"
+    }],
+    "version": 4
+}

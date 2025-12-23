@@ -1,0 +1,66 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [{
+            "label": "Build",
+            "type": "cmake",
+            "command": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher" : [
+                "$gcc"
+            ],
+            "detail": "Build project"
+        }, {
+            "label": "Clean",
+            "type": "cmake",
+            "command": "clean",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "none",
+            "problemMatcher" : [
+                "$gcc"
+            ],
+            "detail": "Remove targets"
+        }, {
+            "label": "Hard clean",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-E",
+                "remove_directory",
+                "build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "none",
+            "problemMatcher" : [
+                "$gcc"
+            ],
+            "detail": "Remove build directory"
+        }, {
+            "label": "Echo (libargparse)",
+            "type": "shell",
+            "command": "echo",
+            "args": [
+                ""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "none",
+            "problemMatcher" : [
+                "$gcc"
+            ],
+            "detail": "Echo command",
+            "hide": true
+    }]
+}

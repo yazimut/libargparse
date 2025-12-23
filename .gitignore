@@ -1,0 +1,11 @@
+# Builds
+build
+
+# Temp files
+tmp
+
+# Logs
+*.log
+
+# Windows special files
+desktop.ini
