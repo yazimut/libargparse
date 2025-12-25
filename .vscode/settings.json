@@ -1,3 +1,5 @@
 {
+    "CompilerPath_Linux": "/usr/bin/g++",
+    "CompilerPath_Windows": "${env:MinGW}\\g++.exe",
     "cmake.configureOnEdit": false
 }

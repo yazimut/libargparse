@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28.3)
-project(libargparse C CXX)
+project(libargparse CXX)
 set(PROJECT libargparse)
 set(TARGET argparse)
 message(STATUS "Configuring ${PROJECT}")
@@ -31,15 +31,29 @@ target_include_directories(${TARGET} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include
 target_compile_definitions(${TARGET} PRIVATE
     $<$<CONFIG:Debug>:DEBUG> $<$<CONFIG:Release>:NDEBUG>
     ARGPARSE_EXPORTS
+    ARGPARSE_STATIC
 )
 target_compile_options(${TARGET} PRIVATE
     $<$<CONFIG:Debug>:-g3 -Og> $<$<CONFIG:Release>:-g0 -O3>
     -Wall -Wextra -Wpedantic $<$<CONFIG:Release>:-Werror>
+    -std=c++11
+    -fvisibility=hidden
 )
+target_link_options(${TARGET} PRIVATE)
 target_link_directories(${TARGET} PUBLIC)
 target_link_libraries(${TARGET} PUBLIC)
-target_link_options(${TARGET} PRIVATE)
 
 
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_app")
+if(NOT DEFINED NO_TEST_APP)
+    message(STATUS "Build test_app: YES")
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_app")
+else()
+    message(STATUS "Build test_app: NO")
+endif()
+
+# if(NOT DEFINED NO_TESTS)
+#     message(STATUS "Build and run tests: YES")
+# else()
+#     message(STATUS "Build and run tests: NO")
+# endif()
