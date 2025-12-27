@@ -7,9 +7,5 @@ tmp
 # Logs
 *.log
 
-# VSCode JSONs
-# These files can be modified for use on a specific host
-.vscode
-
 # Windows special files
 desktop.ini

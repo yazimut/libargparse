@@ -1,11 +1,11 @@
 {
     "env": {
         "projectDefines": [
-            "ARGPARSE_EXPORTS",
             "ARGPARSE_SHARED"
         ],
         "projectIncludes": [
-            "${workspaceFolder}/include"
+            "${workspaceFolder}/include",
+            "${workspaceFolder:libargparse}/include"
         ]
     },
     "configurations": [{
@@ -20,7 +20,6 @@
             "compilerPath": "${config:CompilerPath_Linux}",
             "cppStandard": "c++11",
             "intelliSenseMode": "linux-gcc-x64"
-
         }, {
             "name": "Linux (release)",
             "includePath": [
@@ -33,7 +32,6 @@
             "compilerPath": "${config:CompilerPath_Linux}",
             "cppStandard": "c++11",
             "intelliSenseMode": "linux-gcc-x64"
-
         }, {
             "name": "Windows (debug)",
             "includePath": [
@@ -46,7 +44,6 @@
             "compilerPath": "${config:CompilerPath_Windows}",
             "cppStandard": "c++11",
             "intelliSenseMode": "windows-gcc-x64"
-
         }, {
             "name": "Windows (release)",
             "includePath": [
@@ -59,6 +56,6 @@
             "compilerPath": "${config:CompilerPath_Windows}",
             "cppStandard": "c++11",
             "intelliSenseMode": "windows-gcc-x64"
-        }],
+    }],
     "version": 4
 }

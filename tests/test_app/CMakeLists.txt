@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28.3)
-project(test_app C CXX)
+project(test_app CXX)
 set(PROJECT test_app)
 set(TARGET ${PROJECT})
 message(STATUS "Configuring ${PROJECT}")
@@ -18,6 +18,8 @@ else()
     message(FATAL_ERROR "invalid CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}. Available: Debug or Relase")
 endif()
 
+message(STATUS "Using ${ARGPARSE_LIB_TYPE} argparse")
+
 set(CMAKE_CXX_FLAGS_DEBUG "")
 set(CMAKE_CXX_FLAGS_RELEASE "")
 
@@ -30,10 +32,12 @@ add_executable(${TARGET} ${SOURCES} ${HEADERS})
 target_include_directories(${TARGET} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_compile_definitions(${TARGET} PRIVATE
     $<$<CONFIG:Debug>:DEBUG> $<$<CONFIG:Release>:NDEBUG>
+    ${ARGPARSE_LIB_TYPE}
 )
 target_compile_options(${TARGET} PRIVATE
     $<$<CONFIG:Debug>:-g3 -Og> $<$<CONFIG:Release>:-g0 -O3>
     -Wall -Wextra -Wpedantic
+    -std=c++11
 )
 target_link_directories(${TARGET} PUBLIC)
 target_link_libraries(${TARGET} PUBLIC argparse)
