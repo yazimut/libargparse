@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28.3)
-project(test_app CXX)
 set(PROJECT test_app)
+project(${PROJECT} CXX)
 set(TARGET ${PROJECT})
 message(STATUS "Configuring ${PROJECT}")
 
@@ -13,12 +13,10 @@ if(
 endif()
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug|Release")
-    message(STATUS "Project configuration: ${CMAKE_BUILD_TYPE}")
+    message(STATUS "${PROJECT} configuration: ${CMAKE_BUILD_TYPE}")
 else()
     message(FATAL_ERROR "invalid CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}. Available: Debug or Relase")
 endif()
-
-message(STATUS "Using ${ARGPARSE_LIB_TYPE} argparse")
 
 set(CMAKE_CXX_FLAGS_DEBUG "")
 set(CMAKE_CXX_FLAGS_RELEASE "")

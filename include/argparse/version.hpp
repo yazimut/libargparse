@@ -21,29 +21,29 @@ namespace argparse {
      *
      * Can be [0;255]
      */
-    constexpr uint32_t ARGPARSE_VERSON_MAJOR = 1 & 0xFF;
+    constexpr uint32_t ARGPARSE_VERSION_MAJOR = 0 & 0xFF;
 
     /**
      * @brief Library minor update
      *
      * Can be [0;255]
      */
-    constexpr uint32_t ARGPARSE_VERSON_MINOR = 0 & 0xFF;
+    constexpr uint32_t ARGPARSE_VERSION_MINOR = 1 & 0xFF;
 
     /**
      * @brief Library patch update
      *
      * Can be [0;65535]
      */
-    constexpr uint32_t ARGPARSE_VERSON_PATCH = 0 & 0xFFFF;
+    constexpr uint32_t ARGPARSE_VERSION_PATCH = 0 & 0xFFFF;
 
     /**
      * @brief Library version number
      */
     constexpr uint32_t ARGPARSE_VERSION = (
-        (ARGPARSE_VERSON_MAJOR << 24) |
-        (ARGPARSE_VERSON_MINOR << 16) |
-        (ARGPARSE_VERSON_PATCH)
+        (ARGPARSE_VERSION_MAJOR << 24) |
+        (ARGPARSE_VERSION_MINOR << 16) |
+        (ARGPARSE_VERSION_PATCH)
     );
 
     /**

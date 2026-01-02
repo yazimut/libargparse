@@ -37,4 +37,5 @@ If you have any questions or suggestions, contact the developers:
 * GCC 13.3.0
 * GDB 15.0.50
 * VSCode 1.107.1 *(optional, recommended)*
+  * All recommended extensions from `libargparse.code-workspace`
 * Good mood **(MUST HAVE)**

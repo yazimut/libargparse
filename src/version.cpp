@@ -24,9 +24,9 @@ const char *argparse::getVersionString() {
     static string Version = "";
     if (Version.size() == 0) {
         Version.reserve(MAX_ARGPARSE_VERSION_STRING_SIZE);
-        Version += to_string(ARGPARSE_VERSON_MAJOR) + '.';
-        Version += to_string(ARGPARSE_VERSON_MINOR) + '.';
-        Version += to_string(ARGPARSE_VERSON_PATCH);
+        Version += to_string(ARGPARSE_VERSION_MAJOR) + '.';
+        Version += to_string(ARGPARSE_VERSION_MINOR) + '.';
+        Version += to_string(ARGPARSE_VERSION_PATCH);
     }
     return Version.c_str();
 }
