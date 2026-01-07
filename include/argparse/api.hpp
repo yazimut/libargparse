@@ -1,11 +1,16 @@
 /**
  * @file api.hpp
- * @author Eugene Azimut (y.azimut@mail.ru)
  * @brief Declaration of library API export/import
- * @version 1.0.0
- * @date 2025-12-25
+ * @details Each header of libargparse includes this file.
+ * Contains:
+ *   * C++ standard checking;
+ *   * Definitions of API macros;
+ *   * First and global definition of libargparse namespace.
  *
- * @copyright Copyright (c) Eugene Azimut, 2025
+ * @version 1.0.0
+ * @date 2026-01-07
+ * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @copyright Copyright (c) Eugene Azimut, 2026
  *
  */
 #pragma once
@@ -18,6 +23,7 @@
     #error "Required C++ standard is C++11 and higher"
 #endif
 
+/** @cond IGNORE */
 #if defined(_WIN32)
     // Microsoft Windows
     #if defined(ARGPARSE_STATIC)
@@ -61,3 +67,17 @@
 
     #define ARGPARSE_DEPRECATED(msg) __attribute__((deprecated(msg)))
 #endif
+/** @endcond */
+
+
+
+/**
+ * @namespace argparse
+ * @brief libargparse namespace
+ * @details Contains all library definitions
+ *
+ * @authors Eugene Azimut
+ * @version 1.0.0
+ *
+ */
+namespace argparse {}

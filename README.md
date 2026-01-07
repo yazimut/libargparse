@@ -36,6 +36,8 @@ If you have any questions or suggestions, contact the developers:
 * CMake 3.13
 * GCC 13.3.0
 * GDB 15.0.50
+* Doxygen 1.9.8
+* Graphviz 2.43.0
 * VSCode 1.107.1 *(optional, recommended)*
   * All recommended extensions from `libargparse.code-workspace`
 * Good mood **(MUST HAVE)**

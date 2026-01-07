@@ -7,5 +7,9 @@ tmp
 # Logs
 *.log
 
+# Documentation
+# needs to be force added!
+doc
+
 # Windows special files
 desktop.ini

@@ -1,11 +1,11 @@
 /**
  * @file version.hpp
- * @author Eugene Azimut (y.azimut@mail.ru)
  * @brief Declaration of library current version
- * @version 1.0.0
- * @date 2025-12-25
  *
- * @copyright Copyright (c) Eugene Azimut, 2025
+ * @version 1.0.0
+ * @date 2026-07-01
+ * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @copyright Copyright (c) Eugene Azimut, 2026
  *
  */
 #pragma once
@@ -20,25 +20,37 @@ namespace argparse {
      * @brief Library major update
      *
      * Can be [0;255]
+     *
+     * @authors Eugene Azimut
+     * @version 1.0.0
      */
-    constexpr uint32_t ARGPARSE_VERSION_MAJOR = 0 & 0xFF;
+    constexpr uint32_t ARGPARSE_VERSION_MAJOR = 1 & 0xFF;
 
     /**
      * @brief Library minor update
      *
      * Can be [0;255]
+     *
+     * @authors Eugene Azimut
+     * @version 1.0.0
      */
-    constexpr uint32_t ARGPARSE_VERSION_MINOR = 1 & 0xFF;
+    constexpr uint32_t ARGPARSE_VERSION_MINOR = 0 & 0xFF;
 
     /**
      * @brief Library patch update
      *
      * Can be [0;65535]
+     *
+     * @authors Eugene Azimut
+     * @version 1.0.0
      */
     constexpr uint32_t ARGPARSE_VERSION_PATCH = 0 & 0xFFFF;
 
     /**
      * @brief Library version number
+     *
+     * @authors Eugene Azimut
+     * @version 1.0.0
      */
     constexpr uint32_t ARGPARSE_VERSION = (
         (ARGPARSE_VERSION_MAJOR << 24) |
@@ -49,18 +61,28 @@ namespace argparse {
     /**
      * @brief Maximum size of library version string
      *
+     * @authors Eugene Azimut
+     * @version 1.0.0
+     *
      */
     constexpr size_t MAX_ARGPARSE_VERSION_STRING_SIZE = 14;
 
     /**
      * @brief Get library version number
      * @return Version number
+     *
+     * @authors Eugene Azimut
+     * @version 1.0.0
+     *
      */
     ARGPARSE_API uint32_t getVersionNumeric();
 
     /**
      * @brief Get library version string in format X.X.X
      * @return Version string
+     *
+     * @authors Eugene Azimut
+     * @version 1.0.0
      */
     ARGPARSE_API const char *getVersionString();
 }

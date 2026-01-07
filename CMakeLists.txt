@@ -105,5 +105,11 @@ set_target_properties(${TARGET} PROPERTIES
 )
 
 
-
+# Tests
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_app")
+
+# Doxygen
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/doc")
+    add_dependencies(${TARGET} docs)
+endif()

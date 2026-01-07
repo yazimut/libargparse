@@ -18,6 +18,9 @@ LICENSE         text eol=lf
 *.md            text eol=lf
 *.markdown      text eol=lf
 
+# Doxygen
+Doxyfile        text eol=lf
+
 # Plain text
 *.txt           text eol=lf
 

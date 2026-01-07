@@ -1,11 +1,11 @@
 /**
  * @file version.cpp
- * @author Eugene Azimut (y.azimut@mail.ru)
  * @brief Definition of library current version
- * @version 1.0.0
- * @date 2025-12-25
  *
- * @copyright Copyright (c) Eugene Azimut, 2025
+ * @version 1.0.0
+ * @date 2026-07-01
+ * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @copyright Copyright (c) Eugene Azimut, 2026
  *
  */
 #include <argparse/version.hpp>
