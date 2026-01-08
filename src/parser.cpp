@@ -9,13 +9,30 @@
  *
  */
 #include <argparse/parser.hpp>
-#include <string>
 
-using namespace std;
 using namespace argparse;
 
 
 
-argparse::ArgumentParser::ArgumentParser() {}
+ArgumentParser::ArgumentParser(ErrorAction OnError):
+  mOnErrorAction(OnError) {}
 
-argparse::ArgumentParser::~ArgumentParser() {}
+ArgumentParser::ArgumentParser(const ArgumentParser &Other) {
+    *this = Other;
+}
+
+ArgumentParser::~ArgumentParser() {}
+
+ArgumentParser &ArgumentParser::operator = (const ArgumentParser &Right) {
+    mOnErrorAction = Right.mOnErrorAction;
+
+    return *this;
+}
+
+ArgumentParser::ErrorAction ArgumentParser::getErrorAction() const {
+    return mOnErrorAction;
+}
+
+void ArgumentParser::setErrorAction(ErrorAction OnError) {
+    mOnErrorAction = OnError;
+}

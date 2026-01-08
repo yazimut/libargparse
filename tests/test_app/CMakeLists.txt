@@ -33,7 +33,7 @@ target_compile_definitions(${TARGET} PRIVATE
 )
 target_compile_options(${TARGET} PRIVATE
     $<$<CONFIG:Debug>:-g3 -Og> $<$<CONFIG:Release>:-g0 -O3>
-    -Wall -Wextra -Wpedantic
+    -Wall -Wextra -Wpedantic $<$<CONFIG:Release>:-Werror -Wno-error=deprecated>
     -std=c++11
 )
 target_link_directories(${TARGET} PUBLIC)

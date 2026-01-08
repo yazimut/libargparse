@@ -25,6 +25,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+set(LIBARGPARSE_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+
+if(WIN32)
+    set(REDIRECT_TO_NULL > NUL)
+else()
+    set(REDIRECT_TO_NULL > /dev/null)
+endif()
+
 
 
 ### Lib type
@@ -71,7 +79,7 @@ set(PUBLIC_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(PRIVATE_INCLUDES ${SOURCES_DIR})
 file(GLOB_RECURSE PUBLIC_HEADERS "${PUBLIC_INCLUDES}/*.hpp")
 file(GLOB_RECURSE PRIVATE_HEADERS "${PRIVATE_INCLUDES}/*.hpp")
-file(GLOB_RECURSE SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE SOURCES "${SOURCES_DIR}/*.cpp")
 
 set(TARGET ${GLOBAL_LIB_NAME})
 add_library(
@@ -92,7 +100,7 @@ target_compile_definitions(${TARGET} PRIVATE
 )
 target_compile_options(${TARGET} PRIVATE
     $<$<CONFIG:Debug>:-g3 -Og> $<$<CONFIG:Release>:-g0 -O3>
-    -Wall -Wextra -Wpedantic $<$<CONFIG:Release>:-Werror>
+    -Wall -Wextra -Wpedantic $<$<CONFIG:Release>:-Werror -Wno-error=deprecated>
     -std=c++11
     $<$<STREQUAL:${ARGPARSE_LIB_TYPE},SHARED>:-fvisibility=hidden>
 )
@@ -105,11 +113,30 @@ set_target_properties(${TARGET} PROPERTIES
 )
 
 
-# Tests
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_app")
 
-# Doxygen
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/doc")
-    add_dependencies(${TARGET} docs)
+### Documentation
+find_package(Doxygen REQUIRED)
+if(NOT DOXYGEN_FOUND)
+    message(FATAL_ERROR "Doxygen not found in system")
 endif()
+
+# Generate docs target
+set(DOXYFILE "doc/Doxyfile")
+add_custom_target(docs
+    COMMAND ${CMAKE_COMMAND} -E env ${DOXYGEN_EXECUTABLE} ${DOXYFILE} ${REDIRECT_TO_NULL}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM
+)
+add_dependencies(${TARGET} docs)
+
+# Remove docs target
+add_custom_target(docs-clean
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_SOURCE_DIR}/doc/html
+    COMMENT "Removing docs"
+)
+
+
+
+### Test app
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/tests/test_app")

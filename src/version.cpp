@@ -3,7 +3,7 @@
  * @brief Definition of library current version
  *
  * @version 1.0.0
- * @date 2026-07-01
+ * @date 2026-01-07
  * @authors Eugene Azimut (y.azimut@mail.ru)
  * @copyright Copyright (c) Eugene Azimut, 2026
  *

@@ -11,7 +11,7 @@
         "args": [],
         "environment": [],
         "stopAtEntry": false,
-        "cwd": "${workspaceFolder:libargparse}/tmp",
+        "cwd": "${workspaceFolder}/tmp",
         "externalConsole": false,
         "MIMode": "gdb",
         "setupCommands": [{
