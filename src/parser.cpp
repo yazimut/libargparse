@@ -29,6 +29,8 @@ ArgumentParser &ArgumentParser::operator = (const ArgumentParser &Right) {
     return *this;
 }
 
+void ArgumentParser::addArgument() {}
+
 ArgumentParser::ErrorAction ArgumentParser::getErrorAction() const {
     return mOnErrorAction;
 }

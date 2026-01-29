@@ -10,8 +10,9 @@
  */
 #pragma once
 #include "api.hpp"
-#include <cstdint>
+
 #include <cstddef>
+#include <cstdint>
 
 
 
@@ -80,6 +81,7 @@ namespace argparse {
     /**
      * @brief Get library version string in format X.X.X
      * @return Version string
+     * @throw std::bad_alloc in case of memory allocation failure
      *
      * @authors Eugene Azimut
      * @version 1.0.0

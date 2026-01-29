@@ -1,0 +1,220 @@
+/**
+ * @file IArgument.hpp
+ * @brief Declaration of abstract CLI argument
+ *
+ * @version 1.0.0
+ * @date 2026-01-28
+ * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @copyright Copyright (c) Eugene Azimut, 2026
+ *
+ */
+#pragma once
+#include "../api.hpp"
+
+#include <string>
+
+
+
+namespace argparse {
+    /**
+     * @class IArgument
+     * @brief Abstract basic class for CLI arguments
+     * @details Contains definition and basic parameters of CLI argument
+     *
+     * @warning This is an abstract class. Don't create its instances directly!
+     *
+     * @version 1.0.0
+     * @authors Eugene Azimut
+     */
+    ARGPARSE_API class IArgument {
+    public:
+    // Ctors and dtor
+        /**
+         * @brief Default constructor
+         * @details Creates new instance of CLI argument
+         *
+         * @param[in] Flags Either a name or a list of option strings.
+         * Options have to be separated by commas (','). Any whitespace will be ommited.
+         * To mark argument as an optional use dash ('-') or double-dash ('--')
+         *
+         * @param[in] Help A brief description of what the argument does
+         * @param[in] IsRequired Whether or not the command-line option may be omitted (optionals only)
+         * @param[in] IsDeprecated Whether or not use of the argument is deprecated
+         *
+         * @throw std::bad_alloc in case of memory allocation failure
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgument(
+            const std::string &Flags,
+            const std::string &Help = "",
+            bool IsRequired = false,
+            bool IsDeprecated = false
+        );
+
+        /**
+         * @brief Copy constructor
+         * @details Creates new instance of CLI argument as a copy of Other
+         *
+         * @param[in] Other Instance to copy
+         *
+         * @throw std::bad_alloc in case of memory allocation failure
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgument(const IArgument &Other);
+
+        /**
+         * @brief Move constructor
+         * @details Creates new instance of CLI argument moving Other
+         *
+         * @param[in,out] Other Instance to move
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgument(IArgument &&Other) noexcept;
+
+        /**
+         * @brief Destroies instance of CLI argument
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual ~IArgument() = 0;
+
+    // Operators
+        /**
+         * @brief Copy assignment operator
+         * @details Copies Right instance to the current one
+         *
+         * @param[in] Right Instance to copy
+         * @return Reference to the current instance
+         *
+         * @throw std::bad_alloc in case of memory allocation failure
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgument &operator = (const IArgument &Right);
+
+        /**
+         * @brief Move assignment operator
+         * @details Moves Right instance to the current one
+         *
+         * @param[in,out] Right Instance to move
+         * @return Reference to the current instance
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgument &operator = (IArgument &&Right) noexcept;
+
+    // Getters and setters
+        /**
+         * @brief Get argument flags
+         * @details Returns either a name or a list of option strings.
+         * @return String contains argument flags
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual const char *getFlags() const;
+
+        /**
+         * @brief Get help string
+         * @details Returns a brief description of what the argument does.
+         * @return Help string
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual const char *getHelp() const;
+
+        /**
+         * @brief Set help string
+         * @details Sets a new brief description of what the argument does.
+         *
+         * @param[in] Help New help message
+         *
+         * @throw std::bad_alloc in case of memory allocation failure
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual void setHelp(const std::string &Help);
+
+        /**
+         * @brief Returns true if the argument is required; false if not
+         * @return Boolean value
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual bool isRequired() const;
+
+        /**
+         * @brief Makes argument required or not
+         * @param[in] IsRequired Boolean value. Default: true
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual void setRequired(bool IsRequired = true);
+
+        /**
+         * @brief Returns true if the argument is deprecated; false if not
+         * @return Boolean value
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual bool isDeprecated() const;
+
+        /**
+         * @brief Makes argument deprecated or not
+         * @param[in] IsDeprecated Boolean value. Default: true
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual void setDeprecated(bool IsDeprecated = true);
+
+    protected:
+        /**
+         * @brief Copies current class members
+         * @details The method copies members of only the given class,
+         * even if it is an inheritor, and lets avoid repeating code
+         * in the copy constructor and copy assignment operator
+         *
+         * @param[in] Other Instance to copy
+         *
+         * @throw std::bad_alloc in case of memory allocation failure
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        void selfCopy(const IArgument &Other);
+
+        /**
+         * @brief Moves current class members
+         * @details The method moves members of only the given class,
+         * even if it is an inheritor, and lets avoid repeating code
+         * in the move constructor and move assignment operator
+         *
+         * @param[in,out] Other Instance to move
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        void selfMove(IArgument &&Other) noexcept;
+
+    private:
+        std::string mFlags;             ///< Either a name or a list of option strings.
+        std::string mHelp;              ///< A brief description of what the argument does
+        bool        mIsRequired;        ///< Whether or not the command-line option may be omitted
+        bool        mIsDeprecated;      ///< Whether or not use of the argument is deprecated
+    };
+}
