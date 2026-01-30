@@ -1,8 +1,8 @@
 PROJECT_NAME             = "libargparse"
 OUTPUT_DIRECTORY         = "doc"
-INPUT                    = "src" \
-                           "include" \
-                           "doc/mainpage.md"
+INPUT                    = "include" \
+                           "doc/mainpage.md" \
+                           "doc/easteregg.hpp"
 RECURSIVE                = YES
 
 GENERATE_DOCSET          = NO
@@ -32,7 +32,12 @@ HTML_EXTRA_STYLESHEET    = "doc/doxygen-awesome-css/doxygen-awesome.css" \
 
 OPTIMIZE_OUTPUT_FOR_C    = NO
 BUILTIN_STL_SUPPORT      = YES
+ENABLE_PREPROCESSING     = YES
 MACRO_EXPANSION          = YES
-PREDEFINED               = "ARGPARSE_API=" \
-                           "ARGPARSE_HIDDEN=" \
-                           "ARGPARSE_DEPRECATED="
+EXPAND_ONLY_PREDEF       = NO
+PREDEFINED               = ARGPARSE_STATIC="" \
+                           ARGPARSE_SHARED="" \
+                           ARGPARSE_EXPORTS="" \
+                           ARGPARSE_API="" \
+                           ARGPARSE_HIDDEN="" \
+                           ARGPARSE_DEPRECATED=""

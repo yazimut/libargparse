@@ -122,13 +122,16 @@ endif()
 
 # Generate docs target
 set(DOXYFILE "doc/Doxyfile")
-add_custom_target(docs
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set(DOCS_BUILD ALL)
+endif()
+
+add_custom_target(docs ${DOCS_BUILD}
     COMMAND ${CMAKE_COMMAND} -E env ${DOXYGEN_EXECUTABLE} ${DOXYFILE} ${REDIRECT_TO_NULL}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generating API documentation with Doxygen"
     VERBATIM
 )
-add_dependencies(${TARGET} docs)
 
 # Remove docs target
 add_custom_target(docs-clean

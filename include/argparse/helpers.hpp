@@ -3,10 +3,8 @@
  * @brief Contains some help functions
  *
  * @version 1.0.0
- * @date 2026-01-29
- * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
- *
  */
 #pragma once
 #include "api.hpp"

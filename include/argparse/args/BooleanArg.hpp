@@ -3,10 +3,8 @@
  * @brief Declaration of boolean CLI argument
  *
  * @version 1.0.0
- * @date 2026-01-30
- * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
- *
  */
 #pragma once
 #include "../api.hpp"
@@ -18,7 +16,7 @@ namespace argparse {
     /**
      * @class BooleanArg
      * @brief Class for boolean CLI arguments
-     * @details Contains definition and parameters of boolean CLI argument
+     * @details Contains definition and parameters of boolean CLI argument.
      *
      * @version 1.0.0
      * @authors Eugene Azimut
@@ -49,6 +47,7 @@ namespace argparse {
         BooleanArg(
             const std::string &Flags,
             const std::string &Help = "",
+            uint32_t NArgs = NARGS::NO_MORE,
             bool IsRequired   = false,
             bool IsDeprecated = false,
 
@@ -116,12 +115,49 @@ namespace argparse {
         BooleanArg &operator = (BooleanArg &&Right) noexcept;
 
     // Getters and setters
+        /**
+         * @brief Returns recognized value
+         * @return recognized value
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual bool getValue() const;
 
+        /**
+         * @brief Returns value if flag recognized and value wasn't passed
+         * @return Value if flag recognized and value wasn't passed
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual bool getStoreValue() const;
+
+        /**
+         * @brief Sets value if flag recognized and value wasn't passed
+         * @param[in] Value Value if flag recognized and value wasn't passed
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual void setStoreValue(bool Value);
 
+        /**
+         * @brief Returns default value if flag wasn't recognized
+         * @return Default value if flag wasn't recognized
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual bool getDefaultValue() const;
+
+        /**
+         * @brief Sets default value if flag wasn't recognized
+         * @param[in] Value Default value if flag wasn't recognized
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual void setDefaultValue(bool Value);
 
     protected:

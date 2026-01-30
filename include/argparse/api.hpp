@@ -1,17 +1,15 @@
 /**
  * @file api.hpp
  * @brief Declaration of library API export/import
- * @details Each header of libargparse includes this file.
+ * @details Each header of libargparse includes this file.\n
  * Contains:
  *   * C++ standard checking;
  *   * Definitions of API macros;
  *   * First and global definition of libargparse namespace.
  *
  * @version 1.0.0
- * @date 2026-01-07
- * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
- *
  */
 #pragma once
 
@@ -76,8 +74,7 @@
  * @brief libargparse namespace
  * @details Contains all library definitions
  *
- * @authors Eugene Azimut
  * @version 1.0.0
- *
+ * @authors Eugene Azimut
  */
 namespace argparse {}

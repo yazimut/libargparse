@@ -3,10 +3,8 @@
  * @brief Definition of abstract CLI argument
  *
  * @version 1.0.0
- * @date 2026-01-28
- * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
- *
  */
 #include <argparse/args/IArgument.hpp>
 #include "argparse/helpers.hpp"
@@ -16,8 +14,12 @@ using namespace argparse;
 
 
 
-IArgument::IArgument(const string &Flags, const string &Help, bool IsRequired, bool IsDeprecated):
+IArgument::IArgument(
+    const string &Flags, const string &Help,
+    uint32_t NArgs,
+    bool IsRequired, bool IsDeprecated):
 mFlags(Flags), mHelp(Help),
+mNArgs(NArgs),
 mIsRequired(IsRequired), mIsDeprecated(IsDeprecated) {}
 
 IArgument::IArgument(const IArgument &Other) {
@@ -54,6 +56,14 @@ void IArgument::setHelp(const string &Help) {
     mHelp = Help;
 }
 
+uint32_t IArgument::getNArgs() const {
+    return mNArgs;
+}
+
+void IArgument::setNArgs(uint32_t NArgs) {
+    mNArgs = NArgs;
+}
+
 bool IArgument::isRequired() const {
     return mIsRequired;
 }
@@ -73,6 +83,7 @@ void IArgument::setDeprecated(bool IsDeprecated) {
 void IArgument::selfCopy(const IArgument &Other) {
     mFlags = Other.mFlags;
     mHelp  = Other.mHelp;
+    mNArgs = Other.mNArgs;
     mIsRequired   = Other.mIsRequired;
     mIsDeprecated = Other.mIsDeprecated;
 }
@@ -80,6 +91,7 @@ void IArgument::selfCopy(const IArgument &Other) {
 void IArgument::selfMove(IArgument &&Other) noexcept {
     mFlags = move(Other.mFlags);
     mHelp  = move(Other.mHelp);
+    mNArgs = exchange_basic(Other.mNArgs, NARGS::NO_MORE);
     mIsRequired   = exchange_basic(Other.mIsRequired, false);
     mIsDeprecated = exchange_basic(Other.mIsDeprecated, false);
 }

@@ -3,13 +3,12 @@
  * @brief Declaration of abstract CLI argument
  *
  * @version 1.0.0
- * @date 2026-01-28
- * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
- *
  */
 #pragma once
 #include "../api.hpp"
+#include "NARGS.hpp"
 
 #include <string>
 
@@ -28,7 +27,7 @@ namespace argparse {
      */
     ARGPARSE_API class IArgument {
     public:
-    // Ctors and dtor
+    //* Ctors and dtor
         /**
          * @brief Default constructor
          * @details Creates new instance of CLI argument
@@ -38,6 +37,9 @@ namespace argparse {
          * To mark argument as an optional use dash ('-') or double-dash ('--')
          *
          * @param[in] Help A brief description of what the argument does
+         * @param[in] NArgs The number of command-line arguments that should be consumed.
+         * See argparse::NARGS for special values
+         *
          * @param[in] IsRequired Whether or not the command-line option may be omitted (optionals only)
          * @param[in] IsDeprecated Whether or not use of the argument is deprecated
          *
@@ -49,6 +51,7 @@ namespace argparse {
         IArgument(
             const std::string &Flags,
             const std::string &Help = "",
+            uint32_t NArgs = NARGS::NO_MORE,
             bool IsRequired = false,
             bool IsDeprecated = false
         );
@@ -85,7 +88,7 @@ namespace argparse {
          */
         virtual ~IArgument() = 0;
 
-    // Operators
+    //* Operators
         /**
          * @brief Copy assignment operator
          * @details Copies Right instance to the current one
@@ -112,10 +115,11 @@ namespace argparse {
          */
         IArgument &operator = (IArgument &&Right) noexcept;
 
-    // Getters and setters
+    //* Getters and setters
         /**
          * @brief Get argument flags
          * @details Returns either a name or a list of option strings.
+         *
          * @return String contains argument flags
          *
          * @version 1.0.0
@@ -126,6 +130,7 @@ namespace argparse {
         /**
          * @brief Get help string
          * @details Returns a brief description of what the argument does.
+         *
          * @return Help string
          *
          * @version 1.0.0
@@ -145,6 +150,24 @@ namespace argparse {
          * @authors Eugene Azimut
          */
         virtual void setHelp(const std::string &Help);
+
+        /**
+         * @brief Get the number of command-line arguments that should be consumed
+         * @return The number of command-line arguments that should be consumed
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual uint32_t getNArgs() const;
+
+        /**
+         * @brief Set the number of command-line arguments that should be consumed
+         * @param[in] NArgs The number of command-line arguments that should be consumed
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual void setNArgs(uint32_t NArgs);
 
         /**
          * @brief Returns true if the argument is required; false if not
@@ -212,8 +235,9 @@ namespace argparse {
         void selfMove(IArgument &&Other) noexcept;
 
     private:
-        std::string mFlags;             ///< Either a name or a list of option strings.
+        std::string mFlags;             ///< Either a name or a list of option strings
         std::string mHelp;              ///< A brief description of what the argument does
+        uint32_t    mNArgs;             ///< The number of command-line arguments that should be consumed
         bool        mIsRequired;        ///< Whether or not the command-line option may be omitted
         bool        mIsDeprecated;      ///< Whether or not use of the argument is deprecated
     };

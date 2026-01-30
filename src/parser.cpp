@@ -3,10 +3,8 @@
  * @brief Definition of CLI arguments parser
  *
  * @version 1.0.0
- * @date 2026-01-07
- * @authors Eugene Azimut (y.azimut@mail.ru)
+ * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
- *
  */
 #include <argparse/parser.hpp>
 
