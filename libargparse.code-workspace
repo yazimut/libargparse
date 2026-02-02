@@ -6,7 +6,12 @@
         "CompilerPath_Windows": "${env:MinGW}\\g++.exe",
 
         "cmake.configureOnEdit": false,
-        "cmake.configureOnOpen": false
+        "cmake.configureOnOpen": false,
+        "cmake.configureSettings": {
+            "CMAKE_BUILD_TYPE": "Debug",
+            "ARGPARSE_LIB_TYPE": "STATIC"
+        },
+        "cmake.buildDirectory": "${workspaceFolder:libargparse}/build"
     },
 	"folders": [{
             "name": "libargparse",

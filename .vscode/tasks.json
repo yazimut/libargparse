@@ -18,6 +18,22 @@
             ],
             "detail": "Build project"
         }, {
+            "label": "Build docs",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build build",
+                "--target=docs"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "none",
+            "problemMatcher" : [
+                "$gcc"
+            ],
+            "detail": "Build documentation"
+        }, {
             "label": "Clean",
             "type": "cmake",
             "command": "clean",
@@ -29,6 +45,22 @@
                 "$gcc"
             ],
             "detail": "Remove targets"
+        }, {
+            "label": "Remove docs",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build", "build",
+                "--target=docs-clean"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "none",
+            "problemMatcher" : [
+                "$gcc"
+            ],
+            "detail": "Remove documentation"
         }, {
             "label": "Hard clean",
             "type": "shell",

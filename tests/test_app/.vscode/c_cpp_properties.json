@@ -8,7 +8,8 @@
             "${workspaceFolder:libargparse}/include"
         ]
     },
-    "configurations": [{
+    "configurations": [
+        {
             "name": "Linux (debug)",
             "includePath": [
                 "${env:projectIncludes}"
@@ -19,8 +20,10 @@
             ],
             "compilerPath": "${config:CompilerPath_Linux}",
             "cppStandard": "c++11",
-            "intelliSenseMode": "linux-gcc-x64"
-        }, {
+            "intelliSenseMode": "linux-gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        },
+        {
             "name": "Linux (release)",
             "includePath": [
                 "${env:projectIncludes}"
@@ -32,7 +35,8 @@
             "compilerPath": "${config:CompilerPath_Linux}",
             "cppStandard": "c++11",
             "intelliSenseMode": "linux-gcc-x64"
-        }, {
+        },
+        {
             "name": "Windows (debug)",
             "includePath": [
                 "${env:projectIncludes}"
@@ -44,7 +48,8 @@
             "compilerPath": "${config:CompilerPath_Windows}",
             "cppStandard": "c++11",
             "intelliSenseMode": "windows-gcc-x64"
-        }, {
+        },
+        {
             "name": "Windows (release)",
             "includePath": [
                 "${env:projectIncludes}"
@@ -56,6 +61,7 @@
             "compilerPath": "${config:CompilerPath_Windows}",
             "cppStandard": "c++11",
             "intelliSenseMode": "windows-gcc-x64"
-    }],
+        }
+    ],
     "version": 4
 }

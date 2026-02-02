@@ -1,6 +1,6 @@
 /**
- * @file IArgument.hpp
- * @brief Declaration of abstract CLI argument
+ * @file IOptionalArgument.hpp
+ * @brief Declaration of abstract optional CLI argument
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -8,30 +8,42 @@
  */
 #pragma once
 #include "../api.hpp"
-#include "NARGS.hpp"
+#include "IArgument.hpp"
 
+#include <list>
 #include <string>
 
 
 
 namespace argparse {
     /**
-     * @class IArgument
-     * @brief Abstract basic class for CLI arguments
-     * @details Contains definition and basic parameters of CLI argument
+     * @typedef std::list<std::string> Flags
+     * @brief Either a name or a list of option strings.
+     * @details Using for store arguments flags
+     *
+     * @version 1.0.0
+     * @authors Eugene Azimut
+     */
+    using Flags = std::list<std::string>;
+
+    /**
+     * @class IOptionalArgument
+     * @brief Abstract basic class for optional CLI arguments
+     * @details Contains definition and basic parameters of optional CLI argument
      *
      * @warning This is an abstract class. Don't create its instances directly!
      *
      * @version 1.0.0
      * @authors Eugene Azimut
      */
-    ARGPARSE_API class IArgument {
+    ARGPARSE_API class IOptionalArgument: public IArgument {
     public:
     //* Ctors and dtor
         /**
          * @brief Default constructor
-         * @details Creates new instance of CLI argument
+         * @details Creates new instance of optional CLI argument
          *
+         * @param[in] FlagsList A list of option strings
          * @param[in] Help A brief description of what the argument does
          * @param[in] NArgs The number of command-line arguments that should be consumed.
          * See argparse::NARGS for special values
@@ -44,7 +56,44 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        IArgument(
+        IOptionalArgument(
+            const Flags &FlagsList,
+            const std::string &Help = "",
+            uint32_t NArgs = NARGS::NO_MORE,
+            bool IsRequired = false,
+            bool IsDeprecated = false
+        );
+
+        /**
+         * @brief Default constructor
+         * @details Creates new instance of optional CLI argument.\n
+         * This constructor is appliable to initializers:
+         * @code {.cpp}
+         *     IOptionalArgument(
+         *         {"-a", "--arg"},
+         *         "Help message",
+         *         NARGS::NO_MORE,
+         *         false, false
+         *     )
+         * @endcode
+         *
+         * @param[in] FlagsList A list of option strings
+         * @param[in] Help A brief description of what the argument does
+         * @param[in] NArgs The number of command-line arguments that should be consumed.
+         * See argparse::NARGS for special values
+         *
+         * @param[in] IsRequired Whether or not the command-line option may be omitted (optionals only)
+         * @param[in] IsDeprecated Whether or not use of the argument is deprecated
+         *
+         * @throw std::bad_alloc in case of memory allocation failure
+         *
+         * @warning This constructor invokes std::move on FlagsList
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IOptionalArgument(
+            Flags &&FlagsList,
             const std::string &Help = "",
             uint32_t NArgs = NARGS::NO_MORE,
             bool IsRequired = false,
@@ -53,7 +102,7 @@ namespace argparse {
 
         /**
          * @brief Copy constructor
-         * @details Creates new instance of CLI argument as a copy of Other
+         * @details Creates new instance of optional CLI argument as a copy of Other
          *
          * @param[in] Other Instance to copy
          *
@@ -62,26 +111,26 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        IArgument(const IArgument &Other);
+        IOptionalArgument(const IOptionalArgument &Other);
 
         /**
          * @brief Move constructor
-         * @details Creates new instance of CLI argument moving Other
+         * @details Creates new instance of optional CLI argument moving Other
          *
          * @param[in] Other Instance to move
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        IArgument(IArgument &&Other) noexcept;
+        IOptionalArgument(IOptionalArgument &&Other) noexcept;
 
         /**
-         * @brief Destroies instance of CLI argument
+         * @brief Destroies instance of optional CLI argument
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual ~IArgument() = 0;
+        virtual ~IOptionalArgument() = 0;
 
     //* Operators
         /**
@@ -96,7 +145,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        IArgument &operator = (const IArgument &Right);
+        IOptionalArgument &operator = (const IOptionalArgument &Right);
 
         /**
          * @brief Move assignment operator
@@ -108,86 +157,45 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        IArgument &operator = (IArgument &&Right) noexcept;
+        IOptionalArgument &operator = (IOptionalArgument &&Right) noexcept;
 
     //* Getters and setters
         /**
-         * @brief Get help string
-         * @details Returns a brief description of what the argument does.
+         * @brief Get argument flags
+         * @details Returns a list of option strings.
          *
-         * @return Help string
+         * @return A list of option strings
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual const char *getHelp() const;
+        virtual const Flags &getFlags() const;
 
         /**
-         * @brief Set help string
-         * @details Sets a new brief description of what the argument does.
+         * @brief Set argument flags
+         * @details Sets a list of option strings
          *
-         * @param[in] Help New help message
+         * @param[in] FlagsList A list of option strings
          *
          * @throw std::bad_alloc in case of memory allocation failure
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual void setHelp(const std::string &Help);
+        virtual void setFlags(const Flags &FlagsList);
 
         /**
-         * @brief Get the number of command-line arguments that should be consumed
-         * @return The number of command-line arguments that should be consumed
+         * @brief Set argument flags
+         * @details Sets a list of option strings
+         *
+         * @param[in] FlagsList A list of option strings
+         *
+         * @warning This method invokes std::move on FlagsList
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual uint32_t getNArgs() const;
-
-        /**
-         * @brief Set the number of command-line arguments that should be consumed
-         * @param[in] NArgs The number of command-line arguments that should be consumed
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        virtual void setNArgs(uint32_t NArgs);
-
-        /**
-         * @brief Returns true if the argument is required; false if not
-         * @return Boolean value
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        virtual bool isRequired() const;
-
-        /**
-         * @brief Makes argument required or not
-         * @param[in] IsRequired Boolean value. Default: true
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        virtual void setRequired(bool IsRequired = true);
-
-        /**
-         * @brief Returns true if the argument is deprecated; false if not
-         * @return Boolean value
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        virtual bool isDeprecated() const;
-
-        /**
-         * @brief Makes argument deprecated or not
-         * @param[in] IsDeprecated Boolean value. Default: true
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        virtual void setDeprecated(bool IsDeprecated = true);
+        virtual void setFlags(Flags &&FlagsList);
 
     protected:
         /**
@@ -203,7 +211,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        void selfCopy(const IArgument &Other);
+        void selfCopy(const IOptionalArgument &Other);
 
         /**
          * @brief Moves current class members
@@ -216,12 +224,9 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        void selfMove(IArgument &&Other) noexcept;
+        void selfMove(IOptionalArgument &&Other) noexcept;
 
     private:
-        std::string mHelp;              ///< A brief description of what the argument does
-        uint32_t    mNArgs;             ///< The number of command-line arguments that should be consumed
-        bool        mIsRequired;        ///< Whether or not the command-line option may be omitted
-        bool        mIsDeprecated;      ///< Whether or not use of the argument is deprecated
+        Flags mFlags;             ///< A list of option strings
     };
 }

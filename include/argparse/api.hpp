@@ -3,9 +3,9 @@
  * @brief Declaration of library API export/import
  * @details Each header of libargparse includes this file.\n
  * Contains:
- *   * C++ standard checking;
- *   * Definitions of API macros;
- *   * First and global definition of libargparse namespace.
+ *   * C++ standard checking
+ *   * Definitions of API macros
+ *   * First and global definition of libargparse namespace
  *
  * @version 1.0.0
  * @authors Eugene Azimut

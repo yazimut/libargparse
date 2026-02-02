@@ -1,6 +1,6 @@
 /**
  * @file NARGS.hpp
- * @brief Contains declaration of NARGS enum
+ * @brief Contains declaration of NARGS enum and functions
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -10,6 +10,7 @@
 #include "../api.hpp"
 
 #include <cstdint>
+#include <string>
 
 
 
@@ -28,8 +29,10 @@ namespace argparse {
      */
     ARGPARSE_API enum NARGS: uint32_t {
         NO_MORE         = 0u,                ///< Don't consume arguments
-        ZERO_OR_ONE     = UINT32_MAX - 1u,   ///< Consume 0 or 1 arguments
-        ZERO_AND_MORE   = UINT32_MAX - 2u,   ///< Consume 0 or more arguments
-        ONE_AND_MORE    = UINT32_MAX - 3u    ///< Consume 1 or more arguments
+        ZERO_OR_ONE     = UINT32_MAX - 0u,   ///< Consume 0 or 1 arguments
+        ZERO_AND_MORE   = UINT32_MAX - 1u,   ///< Consume 0 or more arguments
+        ONE_AND_MORE    = UINT32_MAX - 2u    ///< Consume 1 or more arguments
     };
+
+    ARGPARSE_API std::string to_string(uint32_t Value);
 }

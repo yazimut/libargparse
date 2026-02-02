@@ -15,29 +15,51 @@ using namespace argparse;
 
 
 BooleanArg::BooleanArg(
-    const string &Flags, const string &Help,
+    bool &Output,
+    const Flags &Flags, const string &Help,
     uint32_t NArgs,
     bool IsRequired, bool IsDeprecated,
     bool StoreValue, bool DefaultValue):
-IArgument(Flags, Help, NArgs, IsRequired, IsDeprecated),
-mStoreValue(StoreValue), mDefaultValue(DefaultValue) {}
+IOptionalArgument(Flags, Help, NArgs, IsRequired, IsDeprecated),
+mOutput(&Output),
+mStoreValue(StoreValue), mDefaultValue(DefaultValue) {
+    setNArgs(NArgs);
+    setStoreValue(StoreValue);
+    setDefaultValue(DefaultValue);
+}
+
+BooleanArg::BooleanArg(
+    bool &Output,
+    Flags &&Flags, const string &Help,
+    uint32_t NArgs,
+    bool IsRequired, bool IsDeprecated,
+    bool StoreValue, bool DefaultValue):
+IOptionalArgument(move(Flags), Help, NArgs, IsRequired, IsDeprecated),
+mOutput(&Output),
+mStoreValue(StoreValue), mDefaultValue(DefaultValue) {
+    setNArgs(NArgs);
+    setStoreValue(StoreValue);
+    setDefaultValue(DefaultValue);
+}
 
 BooleanArg::BooleanArg(const BooleanArg &Other):
-IArgument(Other) {
+IOptionalArgument(Other) {
     selfCopy(Other);
 }
 
 BooleanArg::BooleanArg(BooleanArg &&Other) noexcept:
-IArgument(move(Other)) {
+IOptionalArgument(move(Other)) {
     selfMove(move(Other));
 }
 
-BooleanArg::~BooleanArg() {}
+BooleanArg::~BooleanArg() {
+    mOutput = nullptr;
+}
 
 BooleanArg &BooleanArg::operator = (const BooleanArg &Right) {
     if (this == &Right) return *this;
 
-    *(static_cast<IArgument *>(this)) = Right;
+    *(static_cast<IOptionalArgument *>(this)) = Right;
     selfCopy(Right);
     return *this;
 }
@@ -45,23 +67,29 @@ BooleanArg &BooleanArg::operator = (const BooleanArg &Right) {
 BooleanArg &BooleanArg::operator = (BooleanArg &&Right) noexcept {
     if (this == &Right) return *this;
 
-    *(static_cast<IArgument *>(this)) = move(Right);
+    *(static_cast<IOptionalArgument *>(this)) = move(Right);
     selfMove(move(Right));
     return *this;
 }
 
-void BooleanArg::selfCopy(const BooleanArg &Other) {
-    mStoreValue   = Other.mStoreValue;
-    mDefaultValue = Other.mDefaultValue;
+void BooleanArg::setNArgs(uint32_t NArgs) {
+    if (
+        NArgs == 0 ||
+        NArgs == 1 ||
+        NArgs == NARGS::NO_MORE ||
+        NArgs == NARGS::ZERO_OR_ONE
+    ) {
+        IOptionalArgument::setNArgs(NArgs);
+    } else {
+        throw invalid_argument(
+            string("argparse::BooleanArg::setNArgs(uint32_t): invalid NARgs value - ") +
+            to_string(NArgs)
+        );
+    }
 }
 
-void BooleanArg::selfMove(BooleanArg &&Other) noexcept {
-    mStoreValue   = exchange_basic(Other.mStoreValue, true);
-    mDefaultValue = exchange_basic(Other.mDefaultValue, false);
-}
-
-bool BooleanArg::getValue() const {
-    return mValue;
+bool *BooleanArg::getOutput() const {
+    return mOutput;
 }
 
 bool BooleanArg::getStoreValue() const {
@@ -78,4 +106,16 @@ bool BooleanArg::getDefaultValue() const {
 
 void BooleanArg::setDefaultValue(bool Value) {
     mDefaultValue = Value;
+}
+
+void BooleanArg::selfCopy(const BooleanArg &Other) {
+    mOutput       = Other.mOutput;
+    mStoreValue   = Other.mStoreValue;
+    mDefaultValue = Other.mDefaultValue;
+}
+
+void BooleanArg::selfMove(BooleanArg &&Other) noexcept {
+    mOutput       = exchange_basic(Other.mOutput, nullptr);
+    mStoreValue   = exchange_basic(Other.mStoreValue, true);
+    mDefaultValue = exchange_basic(Other.mDefaultValue, false);
 }

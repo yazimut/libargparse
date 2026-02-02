@@ -15,12 +15,17 @@ using namespace argparse;
 
 
 IArgument::IArgument(
-    const string &Flags, const string &Help,
+    const string &Help,
     uint32_t NArgs,
     bool IsRequired, bool IsDeprecated):
-mFlags(Flags), mHelp(Help),
-mNArgs(NArgs),
-mIsRequired(IsRequired), mIsDeprecated(IsDeprecated) {}
+mHelp(""),
+mNArgs(NARGS::NO_MORE),
+mIsRequired(false), mIsDeprecated(false) {
+    setHelp(Help);
+    setNArgs(NArgs);
+    setRequired(IsRequired);
+    setDeprecated(IsDeprecated);
+}
 
 IArgument::IArgument(const IArgument &Other) {
     selfCopy(Other);
@@ -42,10 +47,6 @@ IArgument &IArgument::operator = (IArgument &&Right) noexcept {
     if (this == &Right) return *this;
     selfMove(move(Right));
     return *this;
-}
-
-const char *IArgument::getFlags() const {
-    return mFlags.c_str();
 }
 
 const char *IArgument::getHelp() const {
@@ -81,7 +82,6 @@ void IArgument::setDeprecated(bool IsDeprecated) {
 }
 
 void IArgument::selfCopy(const IArgument &Other) {
-    mFlags = Other.mFlags;
     mHelp  = Other.mHelp;
     mNArgs = Other.mNArgs;
     mIsRequired   = Other.mIsRequired;
@@ -89,7 +89,6 @@ void IArgument::selfCopy(const IArgument &Other) {
 }
 
 void IArgument::selfMove(IArgument &&Other) noexcept {
-    mFlags = move(Other.mFlags);
     mHelp  = move(Other.mHelp);
     mNArgs = exchange_basic(Other.mNArgs, NARGS::NO_MORE);
     mIsRequired   = exchange_basic(Other.mIsRequired, false);

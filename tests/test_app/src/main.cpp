@@ -1,4 +1,5 @@
 #include <iostream>
+#include <argparse/argparse.hpp>
 #include <argparse/version.hpp>
 
 using namespace std;

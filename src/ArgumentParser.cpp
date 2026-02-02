@@ -1,19 +1,19 @@
 /**
- * @file parser.cpp
+ * @file ArgumentParser.cpp
  * @brief Definition of CLI arguments parser
  *
  * @version 1.0.0
  * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
  */
-#include <argparse/parser.hpp>
+#include <argparse/ArgumentParser.hpp>
 
 using namespace argparse;
 
 
 
 ArgumentParser::ArgumentParser(ErrorAction OnError):
-  mOnErrorAction(OnError) {}
+mOnErrorAction(OnError) {}
 
 ArgumentParser::ArgumentParser(const ArgumentParser &Other) {
     *this = Other;
@@ -26,8 +26,6 @@ ArgumentParser &ArgumentParser::operator = (const ArgumentParser &Right) {
 
     return *this;
 }
-
-void ArgumentParser::addArgument() {}
 
 ArgumentParser::ErrorAction ArgumentParser::getErrorAction() const {
     return mOnErrorAction;

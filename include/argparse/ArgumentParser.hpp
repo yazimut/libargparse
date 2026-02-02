@@ -1,5 +1,5 @@
 /**
- * @file parser.hpp
+ * @file ArgumentParser.hpp
  * @brief Declaration of CLI arguments parser
  *
  * @version 1.0.0
@@ -8,7 +8,6 @@
  */
 #pragma once
 #include "api.hpp"
-#include "args/IArgument.hpp"
 
 #include <cstdint>
 
@@ -78,16 +77,6 @@ namespace argparse {
          * @authors Eugene Azimut
          */
         virtual ArgumentParser &operator = (const ArgumentParser &Right);
-
-        /**
-         * @brief Adds a new argument to parse
-         * @details Adds new argument definition,
-         * that will be used during parsing CLI arguments
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        virtual void addArgument();
 
         /**
          * @brief Get action on CLI arguments parsing errors
