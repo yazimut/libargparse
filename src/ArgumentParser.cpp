@@ -30,40 +30,24 @@ ArgumentParser::ArgumentParser(ArgumentParser &&Other) noexcept {
 ArgumentParser::~ArgumentParser() {}
 
 void ArgumentParser::parse(int argc, const char *argv[]) {
-    list<string> Args;      ///< Args list
+    list<string> Args;          ///< Args list
 
     for (int i = 0; i < argc; ++i) {
         string Arg = argv[i];   ///< Whole argument
 
-        if (!isArgOptional(Arg)) {
+        if (Arg[0] == '-') {
+            // Optional argument
+            if (Arg[1] == '-') {
+                //* Long option
+
+            } else {
+                //* Short option
+            }
+
+        } else {
             // Positional argument
-            Args.push_back(move(Arg));
-            continue;
         }
-
-        // Optional argument
-        string Option = "";     ///< Option with a sign
-        string Value = "";      ///< Value if provided
-        size_t ValueDelimPos = Arg.find_first_of("=:");
-        if (ValueDelimPos != string::npos) {
-            // Option with a value
-            Value = Arg.substr(ValueDelimPos + 1);
-        }
-        Option = Arg.substr(0, ValueDelimPos);
     }
-}
-
-bool ArgumentParser::isArgOptional(const string &Arg) const {
-    if (Arg[0] == '-') {
-        // Unix notation
-        return true;
-    }
-    if (Arg[0] == '/') {
-        // Microsoft Windows notation
-        return true;
-    }
-
-    return false;
 }
 
 void ArgumentParser::splitOption(
@@ -71,7 +55,11 @@ void ArgumentParser::splitOption(
     string &Option,
     string &Value
 ) const {
-
+    size_t ValueDelimPos = Arg.find_first_of("=:");
+    if (ValueDelimPos != string::npos) {
+        Value = Arg.substr(ValueDelimPos + 1);
+    }
+    Option = Arg.substr(0, ValueDelimPos);
 }
 
 void ArgumentParser::selfCopy(const ArgumentParser &Other) {}

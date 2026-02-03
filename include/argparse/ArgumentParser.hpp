@@ -67,8 +67,6 @@ namespace argparse {
         virtual void parse(int argc, const char *argv[]);
 
     protected:
-        virtual bool isArgOptional(const std::string &Arg) const;
-
         virtual void splitOption(
             const std::string &Arg,
             std::string &Option,
