@@ -132,33 +132,6 @@ namespace argparse {
          */
         virtual ~IOptionalArgument() = 0;
 
-    //* Operators
-        /**
-         * @brief Copy assignment operator
-         * @details Copies Right instance to the current one
-         *
-         * @param[in] Right Instance to copy
-         * @return Reference to the current instance
-         *
-         * @throw std::bad_alloc in case of memory allocation failure
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IOptionalArgument &operator = (const IOptionalArgument &Right);
-
-        /**
-         * @brief Move assignment operator
-         * @details Moves Right instance to the current one
-         *
-         * @param[in] Right Instance to move
-         * @return Reference to the current instance
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IOptionalArgument &operator = (IOptionalArgument &&Right) noexcept;
-
     //* Getters and setters
         /**
          * @brief Get argument flags
@@ -197,7 +170,7 @@ namespace argparse {
          */
         virtual void setFlags(Flags &&FlagsList);
 
-    protected:
+    private:
         /**
          * @brief Copies current class members
          * @details The method copies members of only the given class,
@@ -226,7 +199,7 @@ namespace argparse {
          */
         void selfMove(IOptionalArgument &&Other) noexcept;
 
-    private:
+    //* Variables
         Flags mFlags;             ///< A list of option strings
     };
 }

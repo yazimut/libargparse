@@ -83,33 +83,6 @@ namespace argparse {
          */
         virtual ~IArgument() = 0;
 
-    //* Operators
-        /**
-         * @brief Copy assignment operator
-         * @details Copies Right instance to the current one
-         *
-         * @param[in] Right Instance to copy
-         * @return Reference to the current instance
-         *
-         * @throw std::bad_alloc in case of memory allocation failure
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IArgument &operator = (const IArgument &Right);
-
-        /**
-         * @brief Move assignment operator
-         * @details Moves Right instance to the current one
-         *
-         * @param[in] Right Instance to move
-         * @return Reference to the current instance
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IArgument &operator = (IArgument &&Right) noexcept;
-
     //* Getters and setters
         /**
          * @brief Get help string
@@ -189,7 +162,7 @@ namespace argparse {
          */
         virtual void setDeprecated(bool IsDeprecated = true);
 
-    protected:
+    private:
         /**
          * @brief Copies current class members
          * @details The method copies members of only the given class,
@@ -218,7 +191,7 @@ namespace argparse {
          */
         void selfMove(IArgument &&Other) noexcept;
 
-    private:
+    //* Variables
         std::string mHelp;              ///< A brief description of what the argument does
         uint32_t    mNArgs;             ///< The number of command-line arguments that should be consumed
         bool        mIsRequired;        ///< Whether or not the command-line option may be omitted

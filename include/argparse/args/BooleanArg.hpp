@@ -42,10 +42,8 @@ namespace argparse {
      *        ./my_prog --flag
      *    @endcode
      *    Result:
-     *    @code {.json}
-     *        "args": {
-     *            "flag": true
-     *        }
+     *    @code
+     *        MyVar = true
      *    @endcode
      *    In this example, presence of flag places in Myvar StoreValue.
      *    At the same time, absence of flag places in Myvar DefaultValue:\n
@@ -54,10 +52,8 @@ namespace argparse {
      *        ./my_prog
      *    @endcode
      *    Result:
-     *    @code {.json}
-     *        "args": {
-     *            "flag": false
-     *        }
+     *    @code
+     *        MyVar = false
      *    @endcode
      *
      * 2. Now let's create an argument that allows user to set value by themself
@@ -78,30 +74,24 @@ namespace argparse {
      *           ./my_prog --flag false
      *       @endcode
      *       Result:
-     *       @code {.json}
-     *           "args": {
-     *               "flag": false
-     *           }
+     *       @code
+     *           MyVar = false
      *       @endcode
      *    2. Command line:
      *       @code {.sh}
      *           ./my_prog --flag
      *       @endcode
      *       Result:
-     *       @code {.json}
-     *           "args": {
-     *               "flag": true
-     *           }
+     *       @code
+     *           MyVar = true
      *       @endcode
      *    3. Command line:
      *       @code {.sh}
      *           ./my_prog
      *       @endcode
      *       Result:
-     *       @code {.json}
-     *           "args": {
-     *               "flag": false
-     *           }
+     *       @code
+     *           MyVar = false
      *       @endcode
      *
      * Note the order in which the argument is processed:
@@ -234,33 +224,6 @@ namespace argparse {
          */
         virtual ~BooleanArg();
 
-    // Operators
-        /**
-         * @brief Copy assignment operator
-         * @details Copies Right instance to the current one
-         *
-         * @param[in] Right Instance to copy
-         * @return Reference to the current instance
-         *
-         * @throw std::bad_alloc in case of memory allocation failure
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        BooleanArg &operator = (const BooleanArg &Right);
-
-        /**
-         * @brief Move assignment operator
-         * @details Moves Right instance to the current one
-         *
-         * @param[in] Right Instance to move
-         * @return Reference to the current instance
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        BooleanArg &operator = (BooleanArg &&Right) noexcept;
-
     // Getters and setters
         /**
          * @brief Set the number of command-line arguments that should be consumed
@@ -323,7 +286,7 @@ namespace argparse {
          */
         virtual void setDefaultValue(bool Value);
 
-    protected:
+    private:
         /**
          * @brief Copies current class members
          * @details The method copies members of only the given class,
@@ -352,7 +315,7 @@ namespace argparse {
          */
         void selfMove(BooleanArg &&Other) noexcept;
 
-    private:
+    //* Variables
         bool *mOutput;           ///< Pointer to a variable in which value will be placed
         bool  mStoreValue;       ///< Value if flag recognized and value wasn't passed
         bool  mDefaultValue;     ///< Default value if flag wasn't recognized

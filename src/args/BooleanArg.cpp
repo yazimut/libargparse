@@ -56,22 +56,6 @@ BooleanArg::~BooleanArg() {
     mOutput = nullptr;
 }
 
-BooleanArg &BooleanArg::operator = (const BooleanArg &Right) {
-    if (this == &Right) return *this;
-
-    *(static_cast<IOptionalArgument *>(this)) = Right;
-    selfCopy(Right);
-    return *this;
-}
-
-BooleanArg &BooleanArg::operator = (BooleanArg &&Right) noexcept {
-    if (this == &Right) return *this;
-
-    *(static_cast<IOptionalArgument *>(this)) = move(Right);
-    selfMove(move(Right));
-    return *this;
-}
-
 void BooleanArg::setNArgs(uint32_t NArgs) {
     if (
         NArgs == 0 ||

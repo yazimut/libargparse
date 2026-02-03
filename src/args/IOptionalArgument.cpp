@@ -46,22 +46,6 @@ IArgument(move(Other)) {
 
 IOptionalArgument::~IOptionalArgument() {}
 
-IOptionalArgument &IOptionalArgument::operator = (const IOptionalArgument &Right) {
-    if (this == &Right) return *this;
-
-    *(static_cast<IArgument *>(this)) = Right;
-    selfCopy(Right);
-    return *this;
-}
-
-IOptionalArgument &IOptionalArgument::operator = (IOptionalArgument &&Right) noexcept {
-    if (this == &Right) return *this;
-
-    *(static_cast<IArgument *>(this)) = move(Right);
-    selfMove(move(Right));
-    return *this;
-}
-
 const Flags &IOptionalArgument::getFlags() const {
     return mFlags;
 }

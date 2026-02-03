@@ -37,18 +37,6 @@ IArgument::IArgument(IArgument &&Other) noexcept {
 
 IArgument::~IArgument() {}
 
-IArgument &IArgument::operator = (const IArgument &Right) {
-    if (this == &Right) return *this;
-    selfCopy(Right);
-    return *this;
-}
-
-IArgument &IArgument::operator = (IArgument &&Right) noexcept {
-    if (this == &Right) return *this;
-    selfMove(move(Right));
-    return *this;
-}
-
 const char *IArgument::getHelp() const {
     return mHelp.c_str();
 }

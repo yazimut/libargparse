@@ -14,5 +14,8 @@ int main(int argc, const char *argv[]) {
     cout << getVersionString() << endl;
     cout << endl;
 
+    ArgumentParser parser;
+    parser.parse(argc, argv);
+
     return 0x00;
 }
