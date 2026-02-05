@@ -10,10 +10,11 @@
 
 using namespace std;
 using namespace argparse;
+using namespace argparse::args;
 
 
 
-string argparse::to_string(uint32_t Value) {
+string args::to_string(uint32_t Value) {
     switch (Value) {
         case NARGS::NO_MORE:
             return "argparse::NARGS::NO_MORE";
