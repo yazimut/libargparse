@@ -89,7 +89,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual ~IArgument() = 0;
+            virtual ~IArgument() noexcept = 0;
 
         //* Getters and setters
             /**

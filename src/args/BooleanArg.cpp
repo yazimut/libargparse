@@ -53,7 +53,7 @@ IOptionalArgument(move(Other)) {
     selfMove(move(Other));
 }
 
-BooleanArg::~BooleanArg() {
+BooleanArg::~BooleanArg() noexcept {
     mOutput = nullptr;
 }
 

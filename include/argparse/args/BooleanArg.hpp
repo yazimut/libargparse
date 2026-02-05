@@ -223,7 +223,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual ~BooleanArg();
+            virtual ~BooleanArg() noexcept;
 
         // Getters and setters
             /**

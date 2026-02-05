@@ -131,7 +131,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual ~IOptionalArgument() = 0;
+            virtual ~IOptionalArgument() noexcept = 0;
 
         //* Getters and setters
             /**

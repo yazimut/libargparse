@@ -61,7 +61,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual ~ArgumentParser();
+        virtual ~ArgumentParser() noexcept;
 
     //* etc
         virtual void parse(int argc, const char *argv[]);

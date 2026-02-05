@@ -45,7 +45,7 @@ IArgument(move(Other)) {
     selfMove(move(Other));
 }
 
-IOptionalArgument::~IOptionalArgument() {}
+IOptionalArgument::~IOptionalArgument() noexcept {}
 
 const Flags &IOptionalArgument::getFlags() const {
     return mFlags;

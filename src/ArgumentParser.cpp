@@ -27,7 +27,7 @@ ArgumentParser::ArgumentParser(ArgumentParser &&Other) noexcept {
     selfMove(move(Other));
 }
 
-ArgumentParser::~ArgumentParser() {}
+ArgumentParser::~ArgumentParser() noexcept {}
 
 void ArgumentParser::parse(int argc, const char *argv[]) {
     list<string> Args;          ///< Args list

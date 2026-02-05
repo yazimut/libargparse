@@ -1,6 +1,6 @@
 /**
- * @file ArgumentParser.cpp
- * @brief Definition of CLI arguments parser
+ * @file OptionStyle.cpp
+ * @brief Definition of basic CLI option style
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -23,7 +23,7 @@ mIndicator(""), mValueDelim("") {
 OptionStyle::OptionStyle(const OptionStyle &Other):
 mIndicator(Other.mIndicator), mValueDelim(Other.mValueDelim) {}
 
-OptionStyle::OptionStyle(OptionStyle &&Other):
+OptionStyle::OptionStyle(OptionStyle &&Other) noexcept:
 mIndicator(move(Other.mIndicator)), mValueDelim(move(Other.mValueDelim)) {}
 
 OptionStyle::~OptionStyle() noexcept {}
@@ -33,7 +33,7 @@ const char *OptionStyle::getIndicator() const {
 }
 
 void OptionStyle::setIndicator(const string &Value) {
-    if (Value.length() == 0)
+    if (Value.empty())
         throw invalid_argument("OptionStyle::setIndicator(const string &): Indicator cannot be empty string");
 
     mIndicator = Value;
@@ -58,12 +58,8 @@ bool OptionStyle::isArgOptional(const string &Arg) const {
 
 void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) const {
     if (!isArgOptional(Arg)) {
-        // TODO: Strong exception guarantee?
-        // Option = "";
-        // Value = "";
-        // return;
         // TODO: throw ArgparseError("not an optional")
-        throw exception();
+        throw runtime_error("Not an optional");
     }
 
     size_t DelimPos = Arg.find(mValueDelim);
@@ -76,7 +72,7 @@ void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) con
     if (DelimPos == 0) DelimPos = string::npos;
 
     // Extract option
-    string Opt = move(Arg.substr(mIndicator.length(), DelimPos - mIndicator.length()));
+    string Opt = Arg.substr(mIndicator.length(), DelimPos - mIndicator.length());
     if (Option.empty()) {
         /*
            Option wasn't provided!
@@ -86,7 +82,7 @@ void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) con
             * "-=Value"     in case of mValueDelim == "="
            TODO: throw ArgparseError("option wasn't provided")
         */
-       throw exception();
+       throw runtime_error("Option wasn't provided");
     }
 
     // Extract value if provided

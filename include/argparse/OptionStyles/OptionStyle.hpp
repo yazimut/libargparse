@@ -63,7 +63,7 @@ namespace argparse {
              *
              * @throw std::bad_alloc in case of memory allocation failure
              *
-             * @version 1.0.0std::bad_alloc in case of memory allocation failure
+             * @version 1.0.0
              * @authors Eugene Azimut
              */
             OptionStyle(const OptionStyle &Other);
@@ -101,8 +101,8 @@ namespace argparse {
              * @brief Set option indicator
              * @param[in] Value New option indicator. Cannot be an empty string
              *
-             * @throw std::bad_alloc in case of memory allocation failure
              * @throw std::invalid_argument in case of empty Value
+             * @throw std::bad_alloc in case of memory allocation failure
              *
              * @version 1.0.0
              * @authors Eugene Azimut

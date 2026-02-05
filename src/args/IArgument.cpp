@@ -36,7 +36,7 @@ IArgument::IArgument(IArgument &&Other) noexcept {
     selfMove(move(Other));
 }
 
-IArgument::~IArgument() {}
+IArgument::~IArgument() noexcept {}
 
 const char *IArgument::getHelp() const {
     return mHelp.c_str();
