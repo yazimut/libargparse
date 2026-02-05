@@ -14,8 +14,13 @@ using namespace argparse::OptStyles;
 
 
 
+const string WindowsStyle::mIndicator  = "/";
+const string WindowsStyle::mValueDelim = ":";
+
+
+
 WindowsStyle::WindowsStyle():
-OptionStyle("/", ":") {}
+OptionStyle(mIndicator, mValueDelim) {}
 
 WindowsStyle::WindowsStyle(const WindowsStyle &Other):
 OptionStyle(Other) {}

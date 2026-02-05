@@ -1,6 +1,6 @@
 /**
  * @file WindowsStyle.hpp
- * @brief Declaration of CLI option Windows style
+ * @brief Declaration of Windows CLI option style
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -16,8 +16,9 @@ namespace argparse {
     namespace OptStyles {
         /**
          * @class WindowsStyle
-         * @brief Basic CLI option style
+         * @brief Windows CLI option style
          * @details Contains definition and basic parameters of CLI option style
+         * that is typical for Microsoft Windows
          *
          * @version 1.0.0
          * @authors Eugene Azimut
@@ -73,6 +74,10 @@ namespace argparse {
         protected:
             using OptionStyle::setIndicator;
             using OptionStyle::setValueDelimiter;
+
+        private:
+            static const std::string mIndicator;     ///< Option indicator
+            static const std::string mValueDelim;    ///< Value delimiter
         };
     }
 }

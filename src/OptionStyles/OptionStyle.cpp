@@ -77,9 +77,9 @@ void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) con
         /*
            Option wasn't provided!
            Examples:
-            * "-"           mValueDelim doesn't matter
-            * "-="          in case of mValueDelim == "="
-            * "-=Value"     in case of mValueDelim == "="
+            * "/"           mValueDelim doesn't matter
+            * "/:"          in case of mValueDelim == ":"
+            * "/:Value"     in case of mValueDelim == ":"
            TODO: throw ArgparseError("option wasn't provided")
         */
        throw runtime_error("Option wasn't provided");
