@@ -23,7 +23,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        ARGPARSE_API class UnixStyle: public OptionStyle {
+        ARGPARSE_API class UnixStyle final: public OptionStyle {
         public:
         //* Ctors and dtor
             /**
@@ -112,7 +112,7 @@ namespace argparse {
             using OptionStyle::setValueDelimiter;
 
         private:
-            static const std::string mShortIndicator;   ///< Short option indicator
+            static const char        mShortIndicator;   ///< Short option indicator
             static const std::string mLongIndicator;    ///< Long option indicator
             static const std::string mValueDelim;       ///< Value delimiter
         };

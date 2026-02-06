@@ -23,7 +23,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        ARGPARSE_API class WindowsStyle: public OptionStyle {
+        ARGPARSE_API class WindowsStyle final: public OptionStyle {
         public:
         //* Ctors and dtor
             /**
