@@ -13,7 +13,7 @@
 
 
 namespace argparse {
-    namespace OptStyles {
+    namespace styles {
         /**
          * @class WindowsStyle
          * @brief Windows CLI option style

@@ -13,7 +13,7 @@
 
 
 namespace argparse {
-    namespace OptStyles {
+    namespace styles {
         /**
          * @class UnixStyle
          * @brief Unix CLI option style

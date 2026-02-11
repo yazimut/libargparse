@@ -11,14 +11,15 @@
 
 using namespace std;
 using namespace argparse;
+using namespace argparse::version;
 
 
 
-uint32_t argparse::getVersionNumeric() {
+uint32_t version::getVersionNumeric() {
     return ARGPARSE_VERSION;
 }
 
-const char *argparse::getVersionString() {
+const char *version::getVersionString() {
     static string Version = "";
     if (Version.size() == 0) {
         Version.reserve(MAX_ARGPARSE_VERSION_STRING_SIZE);

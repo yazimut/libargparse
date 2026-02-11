@@ -109,7 +109,7 @@ target_link_directories(${TARGET} PUBLIC)
 target_link_libraries(${TARGET} PUBLIC)
 set_target_properties(${TARGET} PROPERTIES
     VERSION     ${ARGPARSE_VERSION}
-    SOVERSION   "${ARGPARSE_VERSION_MAJOR}.${ARGPARSE_VERSION_MINOR}"
+    SOVERSION   "${ARGPARSE_VERSION_MAJOR}"
 )
 
 

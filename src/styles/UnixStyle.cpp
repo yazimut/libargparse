@@ -6,11 +6,11 @@
  * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
  */
-#include <argparse/OptionStyles/UnixStyle.hpp>
+#include <argparse/styles/UnixStyle.hpp>
 
 using namespace std;
 using namespace argparse;
-using namespace argparse::OptStyles;
+using namespace argparse::styles;
 
 
 
@@ -45,7 +45,7 @@ bool UnixStyle::isArgOptional(const string &Arg) const {
 void UnixStyle::splitArg(const string &Arg, string &Option, string &Value) const {
     if (!isArgOptional(Arg)) {
         // TODO: throw ArgparseError("not an optional")
-        throw runtime_error("Not an optional");
+        throw runtime_error("Not an optional 0");
     }
 
     string Opt = "";
@@ -56,7 +56,7 @@ void UnixStyle::splitArg(const string &Arg, string &Option, string &Value) const
         if (Arg.length() == 2) {
             // Arg == "--"
             // TODO: throw ArgparseError("Invalid option (option not provided)")
-            throw runtime_error("Invalid option (option not provided)");
+            throw runtime_error("Invalid option (option not provided) 1");
         }
 
         size_t DelimPos = Arg.find(mValueDelim);
@@ -71,24 +71,15 @@ void UnixStyle::splitArg(const string &Arg, string &Option, string &Value) const
         // Extract option
         Opt = move(Arg.substr(mLongIndicator.length(), DelimPos - mLongIndicator.length()));
         if (Opt.empty()) {
-            // Option wasn't provided
-            if (DelimPos == string::npos) {
-                // mValueDelim wasn't found
-                // It seems Arg == "--"
-                // TODO: throw ArgparseError("Invalid option (option not provided)")
-                throw runtime_error("Invalid option (option not provided)");
+            // It seems Arg == "--=*"
+            if (Val.empty()) {
+                // It seems Arg == "--="
+                // TODO: throw ArgparseError("Value delimiter (\"=\") cannot be an option")
+                throw runtime_error("Value delimiter (\"=\") cannot be an option 3");
             } else {
-                // mValueDelim was found
-                // It seems Arg == "--=*"
-                if (Val.empty()) {
-                    // It seems Arg == "--="
-                    // TODO: throw ArgparseError("Value delimiter (\"=\") cannot be an option")
-                    throw runtime_error("Value delimiter (\"=\") cannot be an option");
-                } else {
-                    // It seems Arg == "--=+"
-                    // TODO: throw ArgparseError("Invalid option (option not provided)")
-                    throw runtime_error("Invalid option (option not provided)");
-                }
+                // It seems Arg == "--=+"
+                // TODO: throw ArgparseError("Invalid option (option not provided)")
+                throw runtime_error("Invalid option (option not provided) 4");
             }
         }
     } else {
@@ -97,14 +88,14 @@ void UnixStyle::splitArg(const string &Arg, string &Option, string &Value) const
         if (Arg.length() == 1) {
             // Arg == "-"
             // TODO: throw ArgparseError("Invalid option (option not provided)")
-            throw runtime_error("Invalid option (option not provided)");
+            throw runtime_error("Invalid option (option not provided) 5");
         }
 
         Opt = Arg[1];
         if (Opt == mValueDelim) {
             // Arg == "-=*"
             // TODO: throw ArgparseError("Value delimiter (\"=\") cannot be an option")
-            throw runtime_error("Value delimiter (\"=\") cannot be an option");
+            throw runtime_error("Value delimiter (\"=\") cannot be an option 6");
         }
 
         // Extract value
@@ -112,7 +103,7 @@ void UnixStyle::splitArg(const string &Arg, string &Option, string &Value) const
         if (DelimPos == 2) {
             // It seems Arg == "-f=*"
             // TODO: throw ArgparseError("UnixStyle doesn't support value delimiters in short options")
-            throw runtime_error("UnixStyle doesn't support value delimiters in short options");
+            throw runtime_error("UnixStyle doesn't support value delimiters in short options 7");
         }
 
         Val = move(Arg.substr(2));

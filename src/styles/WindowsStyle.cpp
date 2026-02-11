@@ -6,11 +6,11 @@
  * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
  */
-#include <argparse/OptionStyles/WindowsStyle.hpp>
+#include <argparse/styles/WindowsStyle.hpp>
 
 using namespace std;
 using namespace argparse;
-using namespace argparse::OptStyles;
+using namespace argparse::styles;
 
 
 

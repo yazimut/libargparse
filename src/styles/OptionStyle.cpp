@@ -6,11 +6,12 @@
  * @authors Eugene Azimut
  * @copyright Copyright (c) Eugene Azimut, 2026
  */
-#include <argparse/OptionStyles/OptionStyle.hpp>
+#include <argparse/styles/OptionStyle.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace argparse;
-using namespace argparse::OptStyles;
+using namespace argparse::styles;
 
 
 
@@ -48,7 +49,7 @@ void OptionStyle::setValueDelimiter(const string &Value) {
 }
 
 bool OptionStyle::isArgOptional(const string &Arg) const {
-    if (Arg.length() <= mIndicator.length()) return false;
+    if (Arg.length() < mIndicator.length()) return false;
 
     for (size_t i = 0; i < mIndicator.length(); ++i)
         if (Arg[i] != mIndicator[i]) return false;
@@ -59,12 +60,16 @@ bool OptionStyle::isArgOptional(const string &Arg) const {
 void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) const {
     if (!isArgOptional(Arg)) {
         // TODO: throw ArgparseError("not an optional")
-        throw runtime_error("Not an optional");
+        throw runtime_error("Not an optional 0");
+    }
+    if (Arg.length() == mIndicator.length()) {
+        // TODO: throw ArgparseError("Invalid option (option not provided)")
+        throw runtime_error("Invalid option (option not provided) 1");
     }
 
     size_t DelimPos = Arg.find(mValueDelim);
     /*
-       std::string::find(const std::string &__str) returns 0
+       std::string::find(const std::string &__str, std::size_t __pos) returns 0
        if __str is an empty string, which means
        value cannot be provided in this Style.
        So the whole string is an option
@@ -73,7 +78,7 @@ void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) con
 
     // Extract option
     string Opt = Arg.substr(mIndicator.length(), DelimPos - mIndicator.length());
-    if (Option.empty()) {
+    if (Opt.empty()) {
         /*
            Option wasn't provided!
            Examples:

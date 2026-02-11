@@ -11,4 +11,8 @@
 #pragma once
 #include "api.hpp"
 #include "ArgumentParser.hpp"
+
 #include "args/BooleanArg.hpp"
+
+#include "styles/UnixStyle.hpp"
+#include "styles/WindowsStyle.hpp"

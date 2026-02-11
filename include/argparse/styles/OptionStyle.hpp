@@ -16,13 +16,13 @@
 
 namespace argparse {
     /**
-     * @namespace argparse::OptStyles
+     * @namespace argparse::styles
      * @brief Contains all CLI option styles
      *
      * @version 1.0.0
      * @authors Eugene Azimut
      */
-    namespace OptStyles {
+    namespace styles {
         /**
          * @class OptionStyle
          * @brief Basic CLI option style
