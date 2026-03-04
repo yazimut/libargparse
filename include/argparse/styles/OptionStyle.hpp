@@ -31,7 +31,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        ARGPARSE_API class OptionStyle {
+        class ARGPARSE_API OptionStyle {
         public:
         //* Ctors and dtor
             /**

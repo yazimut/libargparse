@@ -37,7 +37,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        ARGPARSE_API class IOptionalArgument: public IArgument {
+        class ARGPARSE_API IOptionalArgument: public IArgument {
         public:
         //* Ctors and dtor
             /**

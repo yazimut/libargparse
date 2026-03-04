@@ -4,26 +4,10 @@ project(${PROJECT} CXX)
 set(GLOBAL_LIB_NAME argparse)
 message(STATUS "Configuring ${PROJECT}")
 
-if(
-    NOT DEFINED CMAKE_BUILD_TYPE OR
-    CMAKE_BUILD_TYPE STREQUAL ""
-)
-    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Build configuration" FORCE)
-    message(STATUS "CMAKE_BUILD_TYPE wasn't set, using default: ${CMAKE_BUILD_TYPE}")
-endif()
 
-if(CMAKE_BUILD_TYPE MATCHES "Debug|Release")
-    message(STATUS "${GLOBAL_LIB_NAME} configuration: ${CMAKE_BUILD_TYPE}")
-else()
-    message(FATAL_ERROR "invalid CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}. Available: Debug or Relase")
-endif()
 
 set(CMAKE_CXX_FLAGS_DEBUG "")
 set(CMAKE_CXX_FLAGS_RELEASE "")
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 set(LIBARGPARSE_PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -37,7 +21,7 @@ endif()
 
 ### Lib type
 if(NOT DEFINED ARGPARSE_LIB_TYPE)
-    set(ARGPARSE_LIB_TYPE STATIC)
+    set(ARGPARSE_LIB_TYPE SHARED)
     message(STATUS "ARGPARSE_LIB_TYPE wasn't set, using default: ${ARGPARSE_LIB_TYPE}")
 endif()
 
@@ -82,34 +66,42 @@ file(GLOB_RECURSE PRIVATE_HEADERS "${PRIVATE_INCLUDES}/*.hpp")
 file(GLOB_RECURSE SOURCES "${SOURCES_DIR}/*.cpp")
 
 set(TARGET ${GLOBAL_LIB_NAME})
-add_library(
-    ${TARGET}
+add_library(${TARGET}
     ${ARGPARSE_LIB_TYPE}
     ${SOURCES}
     ${PUBLIC_HEADERS} ${PRIVATE_HEADERS}
 )
-target_include_directories(${TARGET} PUBLIC ${PUBLIC_INCLUDES})
-target_include_directories(${TARGET} PRIVATE ${PRIVATE_INCLUDES})
-target_compile_definitions(${TARGET} PUBLIC
-    $<$<STREQUAL:${ARGPARSE_LIB_TYPE},STATIC>:ARGPARSE_STATIC>
-    $<$<STREQUAL:${ARGPARSE_LIB_TYPE},SHARED>:ARGPARSE_SHARED>
+target_include_directories(${TARGET}
+    PUBLIC
+        ${PUBLIC_INCLUDES}
+    PRIVATE
+        ${PRIVATE_INCLUDES}
 )
-target_compile_definitions(${TARGET} PRIVATE
-    $<$<CONFIG:Debug>:DEBUG> $<$<CONFIG:Release>:NDEBUG>
-    ARGPARSE_EXPORTS
+target_compile_definitions(${TARGET}
+    PUBLIC
+        $<$<STREQUAL:${ARGPARSE_LIB_TYPE},STATIC>:ARGPARSE_STATIC>
+        $<$<STREQUAL:${ARGPARSE_LIB_TYPE},SHARED>:ARGPARSE_SHARED>
+    PRIVATE
+        $<$<CONFIG:Debug>:DEBUG> $<$<CONFIG:Release>:NDEBUG>
+        $<$<STREQUAL:${ARGPARSE_LIB_TYPE},SHARED>:ARGPARSE_EXPORTS>
 )
-target_compile_options(${TARGET} PRIVATE
-    $<$<CONFIG:Debug>:-g3 -Og> $<$<CONFIG:Release>:-g0 -O3>
-    -Wall -Wextra -Wpedantic $<$<CONFIG:Release>:-Werror -Wno-error=deprecated>
-    -std=c++11
-    $<$<STREQUAL:${ARGPARSE_LIB_TYPE},SHARED>:-fvisibility=hidden>
+target_compile_options(${TARGET}
+    PUBLIC
+    PRIVATE
+        $<$<CONFIG:Debug>:-g3 -Og> $<$<CONFIG:Release>:-g0 -O3>
+        -Wall -Wextra -Wpedantic $<$<CONFIG:Release>:-Werror -Wno-error=deprecated>
+        -std=c++11 -pipe
+        $<$<STREQUAL:${ARGPARSE_LIB_TYPE},SHARED>:-fvisibility=hidden>
 )
-target_link_options(${TARGET} PRIVATE)
-target_link_directories(${TARGET} PUBLIC)
-target_link_libraries(${TARGET} PUBLIC)
-set_target_properties(${TARGET} PROPERTIES
-    VERSION     ${ARGPARSE_VERSION}
-    SOVERSION   "${ARGPARSE_VERSION_MAJOR}"
+target_link_options(${TARGET} PUBLIC PRIVATE)
+target_link_directories(${TARGET} PUBLIC PRIVATE)
+target_link_libraries(${TARGET} PUBLIC PRIVATE)
+set_target_properties(${TARGET}
+    PROPERTIES
+        PUBLIC_HEADER "${PUBLIC_HEADERS}"
+        DEFINE_SYMBOL ""
+        VERSION       "${ARGPARSE_VERSION}"
+        SOVERSION     "${ARGPARSE_VERSION_MAJOR}"
 )
 
 

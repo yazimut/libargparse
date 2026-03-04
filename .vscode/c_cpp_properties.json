@@ -2,7 +2,7 @@
     "env": {
         "projectDefines": [
             "ARGPARSE_EXPORTS",
-            "ARGPARSE_STATIC"
+            "ARGPARSE_SHARED"
         ],
         "projectIncludes": [
             "${workspaceFolder}/include"

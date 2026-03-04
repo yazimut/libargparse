@@ -33,7 +33,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        ARGPARSE_API class IArgument {
+        class ARGPARSE_API IArgument {
         public:
         //* Ctors and dtor
             /**

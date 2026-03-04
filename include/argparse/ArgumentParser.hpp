@@ -21,7 +21,7 @@ namespace argparse {
      * @version 1.0.0
      * @authors Eugene Azimut
      */
-    ARGPARSE_API class ArgumentParser {
+    class ARGPARSE_API ArgumentParser {
     public:
     //* Ctors and dtor
         /**

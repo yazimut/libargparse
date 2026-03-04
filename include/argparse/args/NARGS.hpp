@@ -28,7 +28,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        ARGPARSE_API enum NARGS: uint32_t {
+        enum ARGPARSE_API NARGS: uint32_t {
             NO_MORE         = 0u,                ///< Don't consume arguments
             ZERO_OR_ONE     = UINT32_MAX - 0u,   ///< Consume 0 or 1 arguments
             ZERO_AND_MORE   = UINT32_MAX - 1u,   ///< Consume 0 or more arguments
