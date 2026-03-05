@@ -15,17 +15,25 @@ using namespace argparse::styles;
 
 
 
-OptionStyle::OptionStyle(const string &Indicator, const string &ValueDelim):
-mIndicator(""), mValueDelim("") {
+OptionStyle::OptionStyle(
+    const string &Indicator,
+    const string &ValueDelim,
+    const string &OptsEndMarker
+): mIndicator(""), mValueDelim(""), mOptsEndMarker(OptsEndMarker) {
     setIndicator(Indicator);
     setValueDelimiter(ValueDelim);
+    setOptsEndMarker(OptsEndMarker);
 }
 
 OptionStyle::OptionStyle(const OptionStyle &Other):
-mIndicator(Other.mIndicator), mValueDelim(Other.mValueDelim) {}
+mIndicator(Other.mIndicator),
+mValueDelim(Other.mValueDelim),
+mOptsEndMarker(Other.mOptsEndMarker) {}
 
 OptionStyle::OptionStyle(OptionStyle &&Other) noexcept:
-mIndicator(move(Other.mIndicator)), mValueDelim(move(Other.mValueDelim)) {}
+mIndicator(move(Other.mIndicator)),
+mValueDelim(move(Other.mValueDelim)),
+mOptsEndMarker(move(Other.mOptsEndMarker)) {}
 
 OptionStyle::~OptionStyle() noexcept {}
 
@@ -48,8 +56,16 @@ void OptionStyle::setValueDelimiter(const string &Value) {
     mValueDelim = Value;
 }
 
+const char *OptionStyle::getOptsEndMarker() const {
+    return mOptsEndMarker.c_str();
+}
+
+void OptionStyle::setOptsEndMarker(const string &Value) {
+    mOptsEndMarker = Value;
+}
+
 bool OptionStyle::isArgOptional(const string &Arg) const {
-    if (Arg.length() < mIndicator.length()) return false;
+    if (Arg.length() <= mIndicator.length()) return false;
 
     for (size_t i = 0; i < mIndicator.length(); ++i)
         if (Arg[i] != mIndicator[i]) return false;

@@ -43,6 +43,9 @@ namespace argparse {
              * @param[in] ValueDelim Value delimiter.\n
              * See OptionStyle::setValueDelimiter(const std::string &) for details.\n
              * Default: ""
+             * @param[in] OptsEndMarker Options end marker.\n
+             * See OptionStyle::setOptsEndMarker(const std::string &) for details.\n
+             * Default: "--"
              *
              * @throw std::bad_alloc in case of memory allocation failure
              * @throw Exceptions from OptionStyle::setIndicator(const std::string &)
@@ -52,7 +55,8 @@ namespace argparse {
              */
             OptionStyle(
                 const std::string &Indicator,
-                const std::string &ValueDelim = ""
+                const std::string &ValueDelim = "",
+                const std::string &OptsEndMarker = "--"
             );
 
             /**
@@ -131,6 +135,28 @@ namespace argparse {
              */
             virtual void setValueDelimiter(const std::string &Value = "");
 
+            /**
+             * @brief Get options end marker
+             * @return Options end marker
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual const char *getOptsEndMarker() const;
+
+            /**
+             * @brief Set options end marker
+             * @param[in] Value New options end marker.\n
+             * Empty string marks that all CLI arguments will be tested for option.\n
+             * Default: "--"
+             *
+             * @throw std::bad_alloc in case of memory allocation failure
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual void setOptsEndMarker(const std::string &Value = "--");
+
         //* etc
             /**
              * @brief Checks if Arg is an option
@@ -167,8 +193,9 @@ namespace argparse {
             ) const;
 
         private:
-            std::string mIndicator;     ///< Option indicator
-            std::string mValueDelim;    ///< Value delimiter
+            std::string mIndicator;         ///< Option indicator
+            std::string mValueDelim;        ///< Value delimiter
+            std::string mOptsEndMarker;     ///< Options end marker
         };
     }
 }
