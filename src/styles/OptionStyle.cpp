@@ -64,6 +64,10 @@ void OptionStyle::setOptsEndMarker(const string &Value) {
     mOptsEndMarker = Value;
 }
 
+bool OptionStyle::isArgOptsEndMarker(const string &Arg) const {
+    return Arg == getOptsEndMarker();
+}
+
 bool OptionStyle::isArgOptional(const string &Arg) const {
     if (Arg.length() <= mIndicator.length()) return false;
 
@@ -74,13 +78,13 @@ bool OptionStyle::isArgOptional(const string &Arg) const {
 }
 
 void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) const {
+    // For code understanding assume:
+    // "--" - Indicator
+    // "="  - Value delimiter
+
     if (!isArgOptional(Arg)) {
-        // TODO: throw ArgparseError("not an optional")
-        throw runtime_error("Not an optional 0");
-    }
-    if (Arg.length() == mIndicator.length()) {
-        // TODO: throw ArgparseError("Invalid option (option not provided)")
-        throw runtime_error("Invalid option (option not provided) 1");
+        // TODO: throw NotAnOptional()
+        throw runtime_error("Not an optional");
     }
 
     size_t DelimPos = Arg.find(mValueDelim);
@@ -92,15 +96,17 @@ void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) con
     */
     if (DelimPos == 0) DelimPos = string::npos;
 
+    /*
+       At this moment may be only following situations:
+         * Indicator, Option and maybe Delimiter (maybe with Value): valid case
+         * Indicator, Delimiter (maybe with Value): invalid case
+    */
+
     // Extract option
     string Opt = Arg.substr(mIndicator.length(), DelimPos - mIndicator.length());
     if (Opt.empty()) {
         /*
-           Option wasn't provided!
-           Examples:
-            * "/"           mValueDelim doesn't matter
-            * "/:"          in case of mValueDelim == ":"
-            * "/:Value"     in case of mValueDelim == ":"
+           No option between indicator and delimiter!
            TODO: throw ArgparseError("option wasn't provided")
         */
        throw runtime_error("Option wasn't provided");
@@ -109,7 +115,6 @@ void OptionStyle::splitArg(const string &Arg, string &Option, string &Value) con
     // Extract value if provided
     string Val = "";
     if (DelimPos != string::npos) {
-        // Value is provided
         Val = move(Arg.substr(DelimPos + mValueDelim.length()));
     }
 

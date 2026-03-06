@@ -159,6 +159,16 @@ namespace argparse {
 
         //* etc
             /**
+             * @brief Checks if Arg is an options end marker
+             * @param[in] Arg Argument to be checked
+             * @return true if Arg is an options end marker, false if not
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual bool isArgOptsEndMarker(const std::string &Arg) const;
+
+            /**
              * @brief Checks if Arg is an option
              * @param[in] Arg Argument to be checked
              * @return true if Arg is an option, false if not
@@ -177,10 +187,11 @@ namespace argparse {
              * Option and Value will not be touched in case of exceptions
              *
              * @param[in] Arg Argument to be splitted
-             * @param[out] Option Option without indicator
-             * @param[out] Value Value without delimiter
+             * @param[out] Option Pure option
+             * @param[out] Value Pure value
              *
              * @throw std::bad_alloc in case of memory allocation failure
+             * @throw std::runtime_error ArgparseError
              * TODO: ArgparseError
              *
              * @version 1.0.0
