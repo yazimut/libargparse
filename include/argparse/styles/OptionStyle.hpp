@@ -33,6 +33,21 @@ namespace argparse {
          */
         class ARGPARSE_API OptionStyle {
         public:
+        //* Default values
+            /**
+             * @brief Default value delimiter
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_VALUE_DELIM = "";
+
+            /**
+             * @brief Default options end marker
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_OPTS_END_MARKER = "--";
+
         //* Ctors and dtor
             /**
              * @brief Default constructor
@@ -41,11 +56,9 @@ namespace argparse {
              * @param[in] Indicator Option indicator.\n
              * See OptionStyle::setIndicator(const std::string &) for details
              * @param[in] ValueDelim Value delimiter.\n
-             * See OptionStyle::setValueDelimiter(const std::string &) for details.\n
-             * Default: ""
+             * See OptionStyle::setValueDelimiter(const std::string &) for details
              * @param[in] OptsEndMarker Options end marker.\n
-             * See OptionStyle::setOptsEndMarker(const std::string &) for details.\n
-             * Default: "--"
+             * See OptionStyle::setOptsEndMarker(const std::string &) for details
              *
              * @throw std::bad_alloc in case of memory allocation failure
              * @throw Exceptions from OptionStyle::setIndicator(const std::string &)
@@ -55,8 +68,8 @@ namespace argparse {
              */
             OptionStyle(
                 const std::string &Indicator,
-                const std::string &ValueDelim = "",
-                const std::string &OptsEndMarker = "--"
+                const std::string &ValueDelim = DEFAULT_VALUE_DELIM,
+                const std::string &OptsEndMarker = DEFAULT_OPTS_END_MARKER
             );
 
             /**
@@ -125,15 +138,14 @@ namespace argparse {
             /**
              * @brief Set value delimiter
              * @param[in] Value New value delimiter.\n
-             * Empty string marks no value can be provided.\n
-             * Default: ""
+             * Empty string marks no value can be provided
              *
              * @throw std::bad_alloc in case of memory allocation failure
              *
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual void setValueDelimiter(const std::string &Value = "");
+            virtual void setValueDelimiter(const std::string &Value = DEFAULT_VALUE_DELIM);
 
             /**
              * @brief Get options end marker
@@ -147,15 +159,14 @@ namespace argparse {
             /**
              * @brief Set options end marker
              * @param[in] Value New options end marker.\n
-             * Empty string marks that all CLI arguments will be tested for option.\n
-             * Default: "--"
+             * Empty string marks that all CLI arguments will be tested for option
              *
              * @throw std::bad_alloc in case of memory allocation failure
              *
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual void setOptsEndMarker(const std::string &Value = "--");
+            virtual void setOptsEndMarker(const std::string &Value = DEFAULT_OPTS_END_MARKER);
 
         //* etc
             /**

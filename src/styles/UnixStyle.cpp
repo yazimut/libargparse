@@ -1,6 +1,10 @@
 /**
  * @file UnixStyle.cpp
- * @brief Definition of basic CLI option Windows style
+ * @brief Definition of Unix CLI option style
+ *
+ * @details This style differs from basic OptionStyle.
+ * In order to improve performance, instead of reusing code,
+ * a new one was written, specific to the current style.
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -14,14 +18,8 @@ using namespace argparse::styles;
 
 
 
-const char   UnixStyle::mShortIndicator = '-';
-const string UnixStyle::mLongIndicator  = "--";
-const string UnixStyle::mValueDelim     = "=";
-
-
-
 UnixStyle::UnixStyle():
-OptionStyle(mLongIndicator, mValueDelim) {}
+OptionStyle("", DEFAULT_VALUE_DELIM, DEFAULT_OPTS_END_MARKER) {}
 
 UnixStyle::UnixStyle(const UnixStyle &Other):
 OptionStyle(Other) {}
@@ -32,6 +30,14 @@ OptionStyle(move(Other)) {}
 UnixStyle::~UnixStyle() noexcept {}
 
 bool UnixStyle::isArgOptional(const string &Arg) const {
+    // Is long?
+    if (Arg.length() > 2) {
+        for (size_t i = 0; i < 2; ++i) {
+            if (Arg[i] != '-') break;
+        }
+    }
+
+
     if (Arg.empty()) return false;
 
     if (Arg[0] == '-') {
@@ -40,6 +46,26 @@ bool UnixStyle::isArgOptional(const string &Arg) const {
     }
 
     return false;
+}
+
+bool UnixStyle::isShortOption(const string &Arg) const {
+    if (Arg.length() <= 1) return false;
+    if (Arg[0] != '-') return false;
+
+    if (
+        Arg.length() > 1 &&
+        Arg[0] == '-'
+    )
+}
+
+bool UnixStyle::isLongOption(const string &Arg) const {
+    string Indicator = DEFAULT_INDICATOR_LONG;
+    if (Arg.length() <= Indicator.length()) return false;
+
+    for (size_t i = 0; i < Indicator.length(); ++i)
+        if (Arg[i] != Indicator[i]) return false;
+
+    return true;
 }
 
 void UnixStyle::splitArg(const string &Arg, string &Option, string &Value) const {

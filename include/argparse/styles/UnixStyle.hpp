@@ -25,6 +25,35 @@ namespace argparse {
          */
         class ARGPARSE_API UnixStyle final: public OptionStyle {
         public:
+        //* Default values
+            /**
+             * @brief Default indicator of short option
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_INDICATOR_SHORT = "-";
+
+            /**
+             * @brief Default indicator of long option
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_INDICATOR_LONG = "--";
+
+            /**
+             * @brief Default value delimiter
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_VALUE_DELIM = "=";
+
+            /**
+             * @brief Default options end marker
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_OPTS_END_MARKER = "--";
+
         //* Ctors and dtor
             /**
              * @brief Default constructor
@@ -71,6 +100,25 @@ namespace argparse {
              */
             virtual ~UnixStyle() noexcept;
 
+        //* Getters
+            /**
+             * @brief Get indicator of short option
+             * @return Option indicator
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual const char *getIndicatorShort() const;
+
+            /**
+             * @brief Get indicator of long option
+             * @return Option indicator
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual const char *getIndicatorLong() const;
+
         //* etc
             /**
              * @brief Checks if Arg is an option
@@ -81,6 +129,9 @@ namespace argparse {
              * @authors Eugene Azimut
              */
             virtual bool isArgOptional(const std::string &Arg) const override;
+
+            bool isShortOption(const std::string &Arg) const;
+            bool isLongOption(const std::string &Arg) const;
 
             /**
              * @brief Splits Arg into Option and Value if possible
@@ -107,14 +158,11 @@ namespace argparse {
                 std::string &Value
             ) const override;
 
-        protected:
+        private:
+            using OptionStyle::getIndicator;
             using OptionStyle::setIndicator;
             using OptionStyle::setValueDelimiter;
-
-        private:
-            static const char        mShortIndicator;   ///< Short option indicator
-            static const std::string mLongIndicator;    ///< Long option indicator
-            static const std::string mValueDelim;       ///< Value delimiter
+            using OptionStyle::setOptsEndMarker;
         };
     }
 }

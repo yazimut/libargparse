@@ -1,6 +1,6 @@
 /**
  * @file WindowsStyle.cpp
- * @brief Definition of basic CLI option Windows style
+ * @brief Definition of Windows CLI option style
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -14,13 +14,8 @@ using namespace argparse::styles;
 
 
 
-const string WindowsStyle::mIndicator  = "/";
-const string WindowsStyle::mValueDelim = ":";
-
-
-
 WindowsStyle::WindowsStyle():
-OptionStyle(mIndicator, mValueDelim) {}
+OptionStyle(DEFAULT_INDICATOR, DEFAULT_VALUE_DELIM, DEFAULT_OPTS_END_MARKER) {}
 
 WindowsStyle::WindowsStyle(const WindowsStyle &Other):
 OptionStyle(Other) {}

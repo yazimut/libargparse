@@ -19,7 +19,7 @@ OptionStyle::OptionStyle(
     const string &Indicator,
     const string &ValueDelim,
     const string &OptsEndMarker
-): mIndicator(""), mValueDelim(""), mOptsEndMarker(OptsEndMarker) {
+): mIndicator(""), mValueDelim(""), mOptsEndMarker("") {
     setIndicator(Indicator);
     setValueDelimiter(ValueDelim);
     setOptsEndMarker(OptsEndMarker);

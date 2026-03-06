@@ -25,6 +25,28 @@ namespace argparse {
          */
         class ARGPARSE_API WindowsStyle final: public OptionStyle {
         public:
+        //* Default values
+            /**
+             * @brief Default indicator
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_INDICATOR = "/";
+
+            /**
+             * @brief Default value delimiter
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_VALUE_DELIM = ":";
+
+            /**
+             * @brief Default options end marker
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            static constexpr const char *DEFAULT_OPTS_END_MARKER = "--";
+
         //* Ctors and dtor
             /**
              * @brief Default constructor
@@ -71,13 +93,10 @@ namespace argparse {
              */
             virtual ~WindowsStyle() noexcept;
 
-        protected:
+        private:
             using OptionStyle::setIndicator;
             using OptionStyle::setValueDelimiter;
-
-        private:
-            static const std::string mIndicator;     ///< Option indicator
-            static const std::string mValueDelim;    ///< Value delimiter
+            using OptionStyle::setOptsEndMarker;
         };
     }
 }
