@@ -7,7 +7,7 @@
  * @copyright Copyright (c) Eugene Azimut, 2026
  */
 #pragma once
-#include "api.hpp"
+#include <argparse/api.hpp>
 
 
 
@@ -25,7 +25,7 @@ namespace argparse {
      * @authors Eugene Azimut
      */
     template<typename T, typename U = T>
-    ARGPARSE_API T exchange_basic(T &Obj, U NewValue) {
+    ARGPARSE_HIDDEN T exchange_basic(T &Obj, U NewValue) {
         T tmp = Obj;
         Obj = NewValue;
         return tmp;

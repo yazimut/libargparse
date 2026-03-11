@@ -1,8 +1,7 @@
 /**
  * @file argparse.hpp
  * @brief Single-include header for library
- * @details Use this header to include all basic functionality
- * of libargparse
+ * @details Use this header to include all basic functionality of libargparse
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -10,9 +9,4 @@
  */
 #pragma once
 #include "api.hpp"
-#include "ArgumentParser.hpp"
-
-#include "args/BooleanArg.hpp"
-
-#include "styles/UnixStyle.hpp"
-#include "styles/WindowsStyle.hpp"
+#include "parsers/IArgumentParser.hpp"
