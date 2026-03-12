@@ -92,6 +92,17 @@ namespace argparse {
         IArgumentParser &operator = (IArgumentParser &&Right) noexcept;
 
     //* etc
+        virtual void addArgument();
+
+        /**
+         * @brief Parses given CLI arguments
+         *
+         * @param[in] argc Arguments count
+         * @param[in] argv Arguments vector
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual void parse(int argc, const char *argv[]) const = 0;
 
     private:

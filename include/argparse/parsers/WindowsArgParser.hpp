@@ -91,6 +91,15 @@ namespace argparse {
         WindowsArgParser &operator = (WindowsArgParser &&Right) noexcept;
 
     //* etc
+        /**
+         * @brief Parses given CLI arguments
+         *
+         * @param[in] argc Arguments count
+         * @param[in] argv Arguments vector
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual void parse(int argc, const char *argv[]) const override;
 
     private:
