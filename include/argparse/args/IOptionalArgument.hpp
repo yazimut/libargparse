@@ -4,7 +4,9 @@
  *
  * @version 1.0.0
  * @authors Eugene Azimut
- * @copyright Copyright (c) Eugene Azimut, 2026
+ * @copyright Copyright (c) Eugene Azimut, 2026 \n
+ * MIT License: this software may be freely used, modified,
+ * and distributed, provided that this notice is retained.
  */
 #pragma once
 #include "../api.hpp"
@@ -67,7 +69,7 @@ namespace argparse {
 
             /**
              * @brief Default constructor
-             * @details Creates new instance of optional CLI argument.\n
+             * @details Creates new instance of optional CLI argument. \n
              * This constructor is appliable to initializers:
              * @code {.cpp}
              *     IOptionalArgument(

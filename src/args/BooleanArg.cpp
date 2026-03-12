@@ -4,7 +4,9 @@
  *
  * @version 1.0.0
  * @authors Eugene Azimut
- * @copyright Copyright (c) Eugene Azimut, 2026
+ * @copyright Copyright (c) Eugene Azimut, 2026 \n
+ * MIT License: this software may be freely used, modified,
+ * and distributed, provided that this notice is retained.
  */
 #include <argparse/args/BooleanArg.hpp>
 #include "../helpers.hpp"

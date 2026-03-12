@@ -7,3 +7,4 @@
  * @authors Rockstart Games
  * @copyright Copyright (c) "Grand Theft Auto: San Andreas", 2004
  */
+#pragma once

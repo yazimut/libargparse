@@ -1,7 +1,7 @@
 /**
  * @file api.hpp
  * @brief Declaration of library API export/import
- * @details Each header of libargparse includes this file.\n
+ * @details Each header of libargparse includes this file. \n
  * Contains:
  *   * C++ standard checking
  *   * Definitions of API macros
@@ -9,7 +9,9 @@
  *
  * @version 1.0.0
  * @authors Eugene Azimut
- * @copyright Copyright (c) Eugene Azimut, 2026
+ * @copyright Copyright (c) Eugene Azimut, 2026 \n
+ * MIT License: this software may be freely used, modified,
+ * and distributed, provided that this notice is retained.
  */
 #pragma once
 

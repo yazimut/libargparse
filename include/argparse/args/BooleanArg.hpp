@@ -4,7 +4,9 @@
  *
  * @version 1.0.0
  * @authors Eugene Azimut
- * @copyright Copyright (c) Eugene Azimut, 2026
+ * @copyright Copyright (c) Eugene Azimut, 2026 \n
+ * MIT License: this software may be freely used, modified,
+ * and distributed, provided that this notice is retained.
  */
 #pragma once
 #include "../api.hpp"
@@ -47,7 +49,7 @@ namespace argparse {
          *        MyVar = true
          *    @endcode
          *    In this example, presence of flag places in Myvar StoreValue.
-         *    At the same time, absence of flag places in Myvar DefaultValue:\n
+         *    At the same time, absence of flag places in Myvar DefaultValue: \n
          *    Command line:
          *    @code {.sh}
          *        ./my_prog
@@ -113,7 +115,7 @@ namespace argparse {
              * @param[out] Output Reference to a variable in which value will be placed
              * @param[in] FlagsList Either a name or a list of option strings
              * @param[in] Help A brief description of what the argument does
-             * @param[in] NArgs The number of command-line arguments that should be consumed.\n
+             * @param[in] NArgs The number of command-line arguments that should be consumed. \n
              * Available values:
              *   * 0;
              *   * 1;
@@ -149,7 +151,7 @@ namespace argparse {
              * @details Creates new instance of boolean CLI argument
              *
              * @param[out] Output Reference to a variable in which value will be placed
-             * @param[in] FlagsList Either a name or a list of option strings.\n
+             * @param[in] FlagsList Either a name or a list of option strings. \n
              * This constructor is appliable to initializers:
              * @code {.cpp}
              *     BooleanArg(
@@ -162,7 +164,7 @@ namespace argparse {
              *     );
              * @endcode
              * @param[in] Help A brief description of what the argument does
-             * @param[in] NArgs The number of command-line arguments that should be consumed.\n
+             * @param[in] NArgs The number of command-line arguments that should be consumed. \n
              * Available values:
              *   * 0;
              *   * 1;
@@ -228,7 +230,7 @@ namespace argparse {
         // Getters and setters
             /**
              * @brief Set the number of command-line arguments that should be consumed
-             * @param[in] NArgs The number of command-line arguments that should be consumed.\n
+             * @param[in] NArgs The number of command-line arguments that should be consumed. \n
              * Available values:
              *   * 0;
              *   * 1;

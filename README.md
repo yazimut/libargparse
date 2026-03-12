@@ -21,7 +21,7 @@ C++ library for parsing CLI arguments in Python argparse module style
 ## License and copyright
 **libargparse** is being distributed under the **MIT License**.<br>
 Copyright © Eugene Azimut, 2026<br>
-Simply put, the developers impose no restrictions on the use and distribution of this software other than the copyright notice. Please respect copyright laws.
+This software may be freely used, modified, and distributed, provided that this notice is retained. Please respect copyright laws.
 
 > [!IMPORTANT]
 > This software is in no way related to **Python** software, which is owned by the **Python Software Foundation** and distributed under the **Python Software Foundation License**. Please note that all references to **Python** software are for informational purporses only, and the developers of **libargparse** do not intend to infringe on anyone's copyright.<br>

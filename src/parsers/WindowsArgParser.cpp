@@ -4,12 +4,16 @@
  *
  * @version 1.0.0
  * @authors Eugene Azimut
- * @copyright Copyright (c) Eugene Azimut, 2026
+ * @copyright Copyright (c) Eugene Azimut, 2026 \n
+ * MIT License: this software may be freely used, modified,
+ * and distributed, provided that this notice is retained.
  */
 #include <argparse/parsers/WindowsArgParser.hpp>
 #include "../helpers.hpp"
 
+#include <string>
 #include <utility>
+#include <iostream>
 
 using namespace std;
 using namespace argparse;
@@ -49,7 +53,33 @@ WindowsArgParser &WindowsArgParser::operator = (WindowsArgParser &&Right) noexce
     return *this;
 }
 
-void WindowsArgParser::parse([[maybe_unused]] int argc, [[maybe_unused]] const char *argv[]) const {}
+void WindowsArgParser::parse(int argc, const char *argv[]) const {
+    bool IsOptsAllowed = true;
+
+    for (int i = 0; i < argc; ++i) {
+        printf("argv[%d] \"%s\": ", i, argv[i]);
+        string arg = argv[i];
+
+        if (IsOptsAllowed) {
+            // End of options?
+            if (arg == "--" || arg == "/-") {
+                IsOptsAllowed = false;
+                printf("no more options\n");
+                continue;
+            }
+
+            // Option?
+            if (arg[0] == '/' && arg.length() > 1) {
+                // Option
+                printf("option\n");
+                continue;
+            }
+        }
+
+        // Positional argument
+        printf("positional argument\n");
+    }
+}
 
 void WindowsArgParser::selfCopy([[maybe_unused]] const WindowsArgParser &Other) {}
 
