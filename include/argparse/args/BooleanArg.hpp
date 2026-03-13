@@ -105,7 +105,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        class ARGPARSE_API BooleanArg: public IOptionalArgument {
+        class ARGPARSE_API BooleanArg: public IOption {
         public:
         // Ctors and dtor
             /**

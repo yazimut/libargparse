@@ -1,6 +1,6 @@
 /**
- * @file IOptionalArgument.hpp
- * @brief Declaration of abstract optional CLI argument
+ * @file IOption.hpp
+ * @brief Declaration of abstract CLI option
  *
  * @version 1.0.0
  * @authors Eugene Azimut
@@ -22,7 +22,7 @@ namespace argparse {
         /**
          * @typedef std::list<std::string> Flags
          * @brief Either a name or a list of option strings.
-         * @details Using for store arguments flags
+         * @details Using for store option flags
          *
          * @version 1.0.0
          * @authors Eugene Azimut
@@ -30,28 +30,28 @@ namespace argparse {
         using Flags = std::list<std::string>;
 
         /**
-         * @class IOptionalArgument
-         * @brief Abstract basic class for optional CLI arguments
-         * @details Contains definition and basic parameters of optional CLI argument
+         * @class IOption
+         * @brief Basic class for CLI option
+         * @details Contains definition and basic parameters of CLI options
          *
          * @warning This is an abstract class. Don't create its instances directly!
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        class ARGPARSE_API IOptionalArgument: public IArgument {
+        class ARGPARSE_API IOption: public IArgument {
         public:
         //* Ctors and dtor
             /**
              * @brief Default constructor
-             * @details Creates new instance of optional CLI argument
+             * @details Creates new instance
              *
              * @param[in] FlagsList A list of option strings
              * @param[in] Help A brief description of what the argument does
              * @param[in] NArgs The number of command-line arguments that should be consumed.
              * See args::NARGS for special values
              *
-             * @param[in] IsRequired Whether or not the command-line option may be omitted (optionals only)
+             * @param[in] IsRequired Whether or not the command-line option may be omitted
              * @param[in] IsDeprecated Whether or not use of the argument is deprecated
              *
              * @throw std::bad_alloc in case of memory allocation failure
@@ -59,7 +59,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            IOptionalArgument(
+            IOption(
                 const Flags &FlagsList,
                 const std::string &Help = "",
                 uint32_t NArgs = NARGS::NO_MORE,
@@ -69,10 +69,10 @@ namespace argparse {
 
             /**
              * @brief Default constructor
-             * @details Creates new instance of optional CLI argument. \n
+             * @details Creates new instance. \n
              * This constructor is appliable to initializers:
              * @code {.cpp}
-             *     IOptionalArgument(
+             *     IOption(
              *         {"-a", "--arg"},
              *         "Help message",
              *         NARGS::NO_MORE,
@@ -85,7 +85,7 @@ namespace argparse {
              * @param[in] NArgs The number of command-line arguments that should be consumed.
              * See args::NARGS for special values
              *
-             * @param[in] IsRequired Whether or not the command-line option may be omitted (optionals only)
+             * @param[in] IsRequired Whether or not the command-line option may be omitted
              * @param[in] IsDeprecated Whether or not use of the argument is deprecated
              *
              * @throw std::bad_alloc in case of memory allocation failure
@@ -95,7 +95,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            IOptionalArgument(
+            IOption(
                 Flags &&FlagsList,
                 const std::string &Help = "",
                 uint32_t NArgs = NARGS::NO_MORE,
@@ -105,7 +105,7 @@ namespace argparse {
 
             /**
              * @brief Copy constructor
-             * @details Creates new instance of optional CLI argument as a copy of Other
+             * @details Creates new instance as a copy of Other
              *
              * @param[in] Other Instance to copy
              *
@@ -114,28 +114,46 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            IOptionalArgument(const IOptionalArgument &Other);
+            IOption(const IOption &Other);
 
             /**
              * @brief Move constructor
-             * @details Creates new instance of optional CLI argument moving Other
+             * @details Creates new instance moving Other
              *
              * @param[in] Other Instance to move
              *
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            IOptionalArgument(IOptionalArgument &&Other) noexcept;
+            IOption(IOption &&Other) noexcept;
 
             /**
-             * @brief Destroies instance of optional CLI argument
+             * @brief Destroies instance
              *
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual ~IOptionalArgument() noexcept = 0;
+            virtual ~IOption() noexcept = 0;
 
         //* Getters and setters
+            /**
+             * @brief Returns true if the option is required; false if not
+             * @return Boolean value
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual bool isRequired() const;
+
+            /**
+             * @brief Makes option required or not
+             * @param[in] IsRequired Boolean value. Default: true
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual void setRequired(bool IsRequired = true);
+
             /**
              * @brief Get argument flags
              * @details Returns a list of option strings.
@@ -187,7 +205,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            void selfCopy(const IOptionalArgument &Other);
+            void selfCopy(const IOption &Other);
 
             /**
              * @brief Moves current class members
@@ -200,10 +218,11 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            void selfMove(IOptionalArgument &&Other) noexcept;
+            void selfMove(IOption &&Other) noexcept;
 
         //* Variables
-            Flags mFlags;             ///< A list of option strings
+            bool  mIsRequired;      ///< Whether or not the command-line option may be omitted
+            Flags mFlags;           ///< A list of option strings
         };
     }
 }

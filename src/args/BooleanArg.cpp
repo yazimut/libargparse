@@ -23,7 +23,7 @@ BooleanArg::BooleanArg(
     uint32_t NArgs,
     bool IsRequired, bool IsDeprecated,
     bool StoreValue, bool DefaultValue):
-IOptionalArgument(Flags, Help, NArgs, IsRequired, IsDeprecated),
+IOption(Flags, Help, NArgs, IsRequired, IsDeprecated),
 mOutput(&Output),
 mStoreValue(StoreValue), mDefaultValue(DefaultValue) {
     setNArgs(NArgs);
@@ -37,7 +37,7 @@ BooleanArg::BooleanArg(
     uint32_t NArgs,
     bool IsRequired, bool IsDeprecated,
     bool StoreValue, bool DefaultValue):
-IOptionalArgument(move(Flags), Help, NArgs, IsRequired, IsDeprecated),
+IOption(move(Flags), Help, NArgs, IsRequired, IsDeprecated),
 mOutput(&Output),
 mStoreValue(StoreValue), mDefaultValue(DefaultValue) {
     setNArgs(NArgs);
@@ -46,12 +46,12 @@ mStoreValue(StoreValue), mDefaultValue(DefaultValue) {
 }
 
 BooleanArg::BooleanArg(const BooleanArg &Other):
-IOptionalArgument(Other) {
+IOption(Other) {
     selfCopy(Other);
 }
 
 BooleanArg::BooleanArg(BooleanArg &&Other) noexcept:
-IOptionalArgument(move(Other)) {
+IOption(move(Other)) {
     selfMove(move(Other));
 }
 
@@ -66,7 +66,7 @@ void BooleanArg::setNArgs(uint32_t NArgs) {
         NArgs == NARGS::NO_MORE ||
         NArgs == NARGS::ZERO_OR_ONE
     ) {
-        IOptionalArgument::setNArgs(NArgs);
+        IOption::setNArgs(NArgs);
     } else {
         throw invalid_argument(
             string("argparse::BooleanArg::setNArgs(uint32_t): invalid NARgs value - ") +

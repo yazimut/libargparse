@@ -27,7 +27,7 @@ namespace argparse {
     namespace args {
         /**
          * @class IArgument
-         * @brief Abstract basic class for CLI arguments
+         * @brief Basic class for CLI arguments
          * @details Contains definition and basic parameters of CLI argument
          *
          * @warning This is an abstract class. Don't create its instances directly!
@@ -40,7 +40,7 @@ namespace argparse {
         //* Ctors and dtor
             /**
              * @brief Default constructor
-             * @details Creates new instance of CLI argument
+             * @details Creates new instance
              *
              * @param[in] Help A brief description of what the argument does
              * @param[in] NArgs The number of command-line arguments that should be consumed.
@@ -57,13 +57,12 @@ namespace argparse {
             IArgument(
                 const std::string &Help = "",
                 uint32_t NArgs = NARGS::NO_MORE,
-                bool IsRequired = false,
                 bool IsDeprecated = false
             );
 
             /**
              * @brief Copy constructor
-             * @details Creates new instance of CLI argument as a copy of Other
+             * @details Creates new instance as a copy of Other
              *
              * @param[in] Other Instance to copy
              *
@@ -76,7 +75,7 @@ namespace argparse {
 
             /**
              * @brief Move constructor
-             * @details Creates new instance of CLI argument moving Other
+             * @details Creates new instance moving Other
              *
              * @param[in] Other Instance to move
              *
@@ -86,12 +85,39 @@ namespace argparse {
             IArgument(IArgument &&Other) noexcept;
 
             /**
-             * @brief Destroies instance of CLI argument
+             * @brief Destroies instance
              *
              * @version 1.0.0
              * @authors Eugene Azimut
              */
             virtual ~IArgument() noexcept = 0;
+
+        //* Operators
+            /**
+             * @brief Copy assignment operator
+             * @details Copies Right instance to current one
+             *
+             * @param[in] Right Instance to copy
+             * @returns Reference to current instance
+             *
+             * @throw std::bad_alloc in case of memory allocation failure
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            IArgument &operator = (const IArgument &Right);
+
+            /**
+             * @brief Move assignment operator
+             * @details Moves Right instance to current one
+             *
+             * @param[in] Right Instance to move
+             * @returns Reference to current instance
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            IArgument &operator = (IArgument &&Right) noexcept;
 
         //* Getters and setters
             /**
@@ -137,24 +163,6 @@ namespace argparse {
              * @authors Eugene Azimut
              */
             virtual void setNArgs(uint32_t NArgs);
-
-            /**
-             * @brief Returns true if the argument is required; false if not
-             * @return Boolean value
-             *
-             * @version 1.0.0
-             * @authors Eugene Azimut
-             */
-            virtual bool isRequired() const;
-
-            /**
-             * @brief Makes argument required or not
-             * @param[in] IsRequired Boolean value. Default: true
-             *
-             * @version 1.0.0
-             * @authors Eugene Azimut
-             */
-            virtual void setRequired(bool IsRequired = true);
 
             /**
              * @brief Returns true if the argument is deprecated; false if not
@@ -206,7 +214,6 @@ namespace argparse {
         //* Variables
             std::string mHelp;              ///< A brief description of what the argument does
             uint32_t    mNArgs;             ///< The number of command-line arguments that should be consumed
-            bool        mIsRequired;        ///< Whether or not the command-line option may be omitted
             bool        mIsDeprecated;      ///< Whether or not use of the argument is deprecated
         };
     }

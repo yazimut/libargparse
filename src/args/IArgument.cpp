@@ -20,25 +20,40 @@ using namespace argparse::args;
 IArgument::IArgument(
     const string &Help,
     uint32_t NArgs,
-    bool IsRequired, bool IsDeprecated):
+    bool IsDeprecated):
 mHelp(""),
 mNArgs(NARGS::NO_MORE),
-mIsRequired(false), mIsDeprecated(false) {
+mIsDeprecated(false) {
     setHelp(Help);
     setNArgs(NArgs);
-    setRequired(IsRequired);
     setDeprecated(IsDeprecated);
 }
 
-IArgument::IArgument(const IArgument &Other) {
+IArgument::IArgument(const IArgument &Other):
+mHelp(""),
+mNArgs(NARGS::NO_MORE),
+mIsDeprecated(false) {
     selfCopy(Other);
 }
 
-IArgument::IArgument(IArgument &&Other) noexcept {
+IArgument::IArgument(IArgument &&Other) noexcept:
+mHelp(""),
+mNArgs(NARGS::NO_MORE),
+mIsDeprecated(false) {
     selfMove(move(Other));
 }
 
 IArgument::~IArgument() noexcept {}
+
+IArgument &IArgument::operator = (const IArgument &Right) {
+    if (this != &Right) selfCopy(Right);
+    return *this;
+}
+
+IArgument &IArgument::operator = (IArgument &&Right) {
+    if (this != &Right) selfMove(move(Right));
+    return *this;
+}
 
 const char *IArgument::getHelp() const {
     return mHelp.c_str();
@@ -56,14 +71,6 @@ void IArgument::setNArgs(uint32_t NArgs) {
     mNArgs = NArgs;
 }
 
-bool IArgument::isRequired() const {
-    return mIsRequired;
-}
-
-void IArgument::setRequired(bool IsRequired) {
-    mIsRequired = IsRequired;
-}
-
 bool IArgument::isDeprecated() const {
     return mIsDeprecated;
 }
@@ -75,13 +82,11 @@ void IArgument::setDeprecated(bool IsDeprecated) {
 void IArgument::selfCopy(const IArgument &Other) {
     mHelp  = Other.mHelp;
     mNArgs = Other.mNArgs;
-    mIsRequired   = Other.mIsRequired;
     mIsDeprecated = Other.mIsDeprecated;
 }
 
 void IArgument::selfMove(IArgument &&Other) noexcept {
     mHelp  = move(Other.mHelp);
     mNArgs = exchange_basic(Other.mNArgs, NARGS::NO_MORE);
-    mIsRequired   = exchange_basic(Other.mIsRequired, false);
     mIsDeprecated = exchange_basic(Other.mIsDeprecated, false);
 }

@@ -23,9 +23,9 @@ namespace argparse {
          * @details Contains special values for NArgs parameter. \n
          * Values: \n
          * * "NO_MORE"       - don't consume arguments \n
-         * * "ZERO_OR_ONE"   - argument will consume 0 or 1 CLI argument, e.g. '?' in python.argparse \n
-         * * "ZERO_AND_MORE" - argument will consume 0 or more CLI arguments, e.g. '*' in python.argparse \n
-         * * "ONE_AND_MORE"  - argument will consume 1 or more CLI arguments, e.g. '+' in python.argparse
+         * * "ZERO_OR_ONE"   - argument will consume 0 or 1 CLI argument, e.g. '?' \n
+         * * "ZERO_AND_MORE" - argument will consume 0 or more CLI arguments, e.g. '*' \n
+         * * "ONE_AND_MORE"  - argument will consume 1 or more CLI arguments, e.g. '+'
          *
          * @version 1.0.0
          * @authors Eugene Azimut
