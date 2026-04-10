@@ -13,6 +13,7 @@
 #include "NARGS.hpp"
 
 #include <string>
+#include <stdexcept>
 
 
 
@@ -50,14 +51,15 @@ namespace argparse {
              * @param[in] IsDeprecated Whether or not use of the argument is deprecated
              *
              * @throw std::bad_alloc in case of memory allocation failure
+             * @throw inherited from IArgument::setNArgs(int)
              *
              * @version 1.0.0
              * @authors Eugene Azimut
              */
             IArgument(
                 const std::string &Help = "",
-                uint32_t NArgs = NARGS::NO_MORE,
-                bool IsDeprecated = false
+                int NArgs               = NARGS::NO_MORE,
+                bool IsDeprecated       = false
             );
 
             /**
@@ -152,17 +154,20 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual uint32_t getNArgs() const;
+            virtual int getNArgs() const;
 
             /**
              * @brief Set the number of command-line arguments that should be consumed
              * @param[in] NArgs The number of command-line arguments that should be consumed.
              * See args::NARGS for special values
              *
+             * @throw std::invalid_argument in case of invalid (negative) value of NArgs
+             * excepting args::NARGS values
+             *
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual void setNArgs(uint32_t NArgs);
+            virtual void setNArgs(int NArgs);
 
             /**
              * @brief Returns true if the argument is deprecated; false if not
@@ -213,7 +218,7 @@ namespace argparse {
 
         //* Variables
             std::string mHelp;              ///< A brief description of what the argument does
-            uint32_t    mNArgs;             ///< The number of command-line arguments that should be consumed
+            int         mNArgs;             ///< The number of command-line arguments that should be consumed
             bool        mIsDeprecated;      ///< Whether or not use of the argument is deprecated
         };
     }

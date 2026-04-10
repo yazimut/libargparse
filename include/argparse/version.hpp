@@ -79,7 +79,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        ARGPARSE_API uint32_t getVersionNumeric();
+        ARGPARSE_API uint32_t getVersionNumeric() noexcept;
 
         /**
          * @brief Get library version string in format X.X.X

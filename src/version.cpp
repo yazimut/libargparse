@@ -17,7 +17,7 @@ using namespace argparse::version;
 
 
 
-uint32_t version::getVersionNumeric() {
+uint32_t version::getVersionNumeric() noexcept {
     return ARGPARSE_VERSION;
 }
 

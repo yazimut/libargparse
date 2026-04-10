@@ -102,6 +102,9 @@ namespace argparse {
          */
         virtual void parse(int argc, const char *argv[]) const override;
 
+    protected:
+        virtual bool isArgOption(const std::string &Arg) const override;
+
     private:
         void selfCopy(const WindowsArgParser &Other);
         void selfMove(WindowsArgParser &&Other) noexcept;

@@ -9,39 +9,28 @@
  * and distributed, provided that this notice is retained.
  */
 #include <argparse/parsers/IArgumentParser.hpp>
-#include "../helpers.hpp"
-
-#include <utility>
 
 using namespace std;
 using namespace argparse;
+using namespace argparse::args;
 
 
 
-IArgumentParser::IArgumentParser() {}
-
-IArgumentParser::IArgumentParser(const IArgumentParser &Other) {
-    selfCopy(Other);
-}
-
-IArgumentParser::IArgumentParser(IArgumentParser &&Other) noexcept {
-    selfMove(move(Other));
-}
+IArgumentParser::IArgumentParser():
+mOptions() {}
 
 IArgumentParser::~IArgumentParser() noexcept {}
 
-IArgumentParser &IArgumentParser::operator = (const IArgumentParser &Right) {
-    if (this != &Right) selfCopy(Right);
-    return *this;
-}
-
-IArgumentParser &IArgumentParser::operator = (IArgumentParser &&Right) noexcept {
-    if (this != &Right) selfMove(move(Right));
-    return *this;
+void IArgumentParser::addArgument(unique_ptr<IOption> &&Opt) {
+    for (const auto &ExistingOpt : mOptions) {
+        if (*Opt == *ExistingOpt)
+            throw invalid_argument(""); // TODO: exception
+    }
+    mOptions.push_back(std::move(Opt));
 }
 
 void IArgumentParser::parse([[maybe_unused]] int argc, [[maybe_unused]] const char *argv[]) const {}
 
-void IArgumentParser::selfCopy([[maybe_unused]] const IArgumentParser &Other) {}
-
-void IArgumentParser::selfMove([[maybe_unused]] IArgumentParser &&Other) noexcept {}
+bool IArgumentParser::isArgOption([[maybe_unused]] const string &Arg) const {
+    return false;
+}

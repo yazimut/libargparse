@@ -55,6 +55,7 @@ namespace argparse {
              * @param[in] IsDeprecated Whether or not use of the argument is deprecated
              *
              * @throw std::bad_alloc in case of memory allocation failure
+             * @throw inherited from args::IArgument(const std::string &, int, bool)
              *
              * @version 1.0.0
              * @authors Eugene Azimut
@@ -62,9 +63,9 @@ namespace argparse {
             IOption(
                 const Flags &FlagsList,
                 const std::string &Help = "",
-                uint32_t NArgs = NARGS::NO_MORE,
-                bool IsRequired = false,
-                bool IsDeprecated = false
+                int NArgs               = NARGS::NO_MORE,
+                bool IsRequired         = false,
+                bool IsDeprecated       = false
             );
 
             /**
@@ -89,6 +90,7 @@ namespace argparse {
              * @param[in] IsDeprecated Whether or not use of the argument is deprecated
              *
              * @throw std::bad_alloc in case of memory allocation failure
+             * @throw inherited from args::IArgument(const std::string &, int, bool)
              *
              * @warning This constructor invokes std::move on FlagsList
              *
@@ -98,9 +100,9 @@ namespace argparse {
             IOption(
                 Flags &&FlagsList,
                 const std::string &Help = "",
-                uint32_t NArgs = NARGS::NO_MORE,
-                bool IsRequired = false,
-                bool IsDeprecated = false
+                int NArgs               = NARGS::NO_MORE,
+                bool IsRequired         = false,
+                bool IsDeprecated       = false
             );
 
             /**
@@ -134,6 +136,55 @@ namespace argparse {
              * @authors Eugene Azimut
              */
             virtual ~IOption() noexcept = 0;
+
+        //* Operators
+            /**
+             * @brief Copy assignment operator
+             * @details Copies Right instance to current one
+             *
+             * @param[in] Right Instance to copy
+             * @returns Reference to current instance
+             *
+             * @throw std::bad_alloc in case of memory allocation failure
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            IOption &operator = (const IOption &Right);
+
+            /**
+             * @brief Move assignment operator
+             * @details Moves Right instance to current one
+             *
+             * @param[in] Right Instance to move
+             * @returns Reference to current instance
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            IOption &operator = (IOption &&Right) noexcept;
+
+            /**
+             * @brief Compares options flags
+             *
+             * @param[in] Right Option to compare
+             * @returns true if options have at least one same flag
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual bool operator == (const IOption &Right) const;
+
+            /**
+             * @brief Compares options flags
+             *
+             * @param[in] Right Option to compare
+             * @returns true if options have no same flags
+             *
+             * @version 1.0.0
+             * @authors Eugene Azimut
+             */
+            virtual bool operator != (const IOption &Right) const;
 
         //* Getters and setters
             /**
@@ -190,6 +241,9 @@ namespace argparse {
              * @authors Eugene Azimut
              */
             virtual void setFlags(Flags &&FlagsList);
+
+        //* etc
+            virtual bool isEquals(const IOption &Other) const;
 
         private:
             /**

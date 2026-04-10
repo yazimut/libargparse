@@ -10,6 +10,12 @@
  */
 #pragma once
 #include "../api.hpp"
+#include "../args/IOption.hpp"
+
+#include <memory>
+#include <string>
+#include <vector>
+#include <stdexcept>
 
 
 
@@ -37,28 +43,6 @@ namespace argparse {
         IArgumentParser();
 
         /**
-         * @brief Copy constructor
-         * @details Creates new instance as a copy of Other
-         *
-         * @param[in] Other Instance to copy
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IArgumentParser(const IArgumentParser &Other);
-
-        /**
-         * @brief Move constructor
-         * @details Creates new instance moving Other
-         *
-         * @param[in, out] Other Instance to move
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IArgumentParser(IArgumentParser &&Other) noexcept;
-
-        /**
          * @brief Destroies instance
          *
          * @version 1.0.0
@@ -66,33 +50,20 @@ namespace argparse {
          */
         virtual ~IArgumentParser() noexcept = 0;
 
-    //* Operators
-        /**
-         * @brief Copy assignment operator
-         * @details Copies Right instance to current one
-         *
-         * @param[in] Right Instance to copy
-         * @returns Reference to current instance
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IArgumentParser &operator = (const IArgumentParser &Right);
-
-        /**
-         * @brief Move assignment operator
-         * @details Moves Right instance to current one
-         *
-         * @param[in] Right Instance to move
-         * @returns Reference to current instance
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        IArgumentParser &operator = (IArgumentParser &&Right) noexcept;
-
     //* etc
-        virtual void addArgument();
+        /**
+         * @brief Add CLI option to parser
+         * @details Adds new CLI option to parser by moving instance to internal vector
+         *
+         * @param[in] Opt Option to add
+         *
+         * @throw std::invalid_argument if there is already the same option in internal vector
+         * @throw inherited from std::vector<T>::push_back(T &&)
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual void addArgument(std::unique_ptr<args::IOption> &&Opt);
 
         /**
          * @brief Parses given CLI arguments
@@ -105,10 +76,55 @@ namespace argparse {
          */
         virtual void parse(int argc, const char *argv[]) const = 0;
 
+    protected:
+        virtual bool isArgOption(const std::string &Arg) const = 0;
+
     private:
-        void selfCopy(const IArgumentParser &Other);
-        void selfMove(IArgumentParser &&Other) noexcept;
+    //* Deleted methods
+        /**
+         * @brief Copy constructor
+         * @details Creates new instance as a copy of Other
+         * @param[in] Other Instance to copy
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgumentParser(const IArgumentParser &Other) = delete;
+
+        /**
+         * @brief Move constructor
+         * @details Creates new instance moving Other
+         * @param[in] Other Instance to move
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgumentParser(IArgumentParser &&Other) noexcept = delete;
+
+        /**
+         * @brief Copy assignment operator
+         * @details Copies Right instance to current one
+         * @param[in] Right Instance to copy
+         * @returns Reference to current instance
+         * @throw std::bad_alloc in case of memory allocation failure
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgumentParser &operator = (const IArgumentParser &Right) = delete;
+
+        /**
+         * @brief Move assignment operator
+         * @details Moves Right instance to current one
+         * @param[in] Right Instance to move
+         * @returns Reference to current instance
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        IArgumentParser &operator = (IArgumentParser &&Right) noexcept = delete;
 
     //* Variables
+        std::vector<std::unique_ptr<args::IOption>> mOptions;      ///< List of CLI options
     };
 }

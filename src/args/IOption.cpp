@@ -20,7 +20,7 @@ using namespace argparse::args;
 IOption::IOption(
     const Flags &FlagsList,
     const string &Help,
-    uint32_t NArgs,
+    int NArgs,
     bool IsRequired, bool IsDeprecated):
 IArgument(Help, NArgs, IsDeprecated),
 mIsRequired(false), mFlags() {
@@ -31,7 +31,7 @@ mIsRequired(false), mFlags() {
 IOption::IOption(
     Flags &&FlagsList,
     const string &Help,
-    uint32_t NArgs,
+    int NArgs,
     bool IsRequired, bool IsDeprecated):
 IArgument(Help, NArgs, IsDeprecated),
 mIsRequired(false), mFlags() {
@@ -53,6 +53,32 @@ mIsRequired(false), mFlags() {
 
 IOption::~IOption() noexcept {}
 
+IOption &IOption::operator = (const IOption &Right) {
+    if (this == &Right) return *this;
+
+    IArgument::operator=(Right);
+    selfCopy(Right);
+
+    return *this;
+}
+
+IOption &IOption::operator = (IOption &&Right) noexcept {
+    if (this == &Right) return *this;
+
+    IArgument::operator=(move(Right));
+    selfMove(move(Right));
+
+    return *this;
+}
+
+bool IOption::operator == (const IOption &Right) const {
+    return isEquals(Right);
+}
+
+bool IOption::operator != (const IOption &Right) const {
+    return !isEquals(Right);
+}
+
 bool IOption::isRequired() const {
     return mIsRequired;
 }
@@ -71,6 +97,15 @@ void IOption::setFlags(const Flags &FlagsList) {
 
 void IOption::setFlags(Flags &&FlagsList) {
     mFlags = move(FlagsList);
+}
+
+bool IOption::isEquals(const IOption &Other) const {
+    for (const string &ThisFlag : mFlags) {
+        for (const string &OtherFlag : Other.mFlags) {
+            if (ThisFlag == OtherFlag) return true;
+        }
+    }
+    return false;
 }
 
 void IOption::selfCopy(const IOption &Other) {

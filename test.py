@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import argparse
 
 def parsePOSIX(args: list):
     IsOptsAllowed = True
@@ -35,10 +36,15 @@ def parsePOSIX(args: list):
         i += 1
 
 if __name__ == '__main__':
-    parsePOSIX([
-        'p1',
-        '-f',
-        '-xyz',
-        '--',
-        '-f', 'true'
-    ])
+    # parsePOSIX([
+    #     'p1',
+    #     '-f',
+    #     '-xyz',
+    #     '--',
+    #     '-f', 'true'
+    # ])
+    p = argparse.ArgumentParser()
+    p.add_argument('--my-flag', nargs='*')
+    p.add_argument('pos', nargs='*')
+    #print(p.parse_args(['--my-flag', '1', "'--f1'"]))
+    print(p.parse_args())

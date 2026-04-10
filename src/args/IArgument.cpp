@@ -19,7 +19,7 @@ using namespace argparse::args;
 
 IArgument::IArgument(
     const string &Help,
-    uint32_t NArgs,
+    int NArgs,
     bool IsDeprecated):
 mHelp(""),
 mNArgs(NARGS::NO_MORE),
@@ -63,11 +63,13 @@ void IArgument::setHelp(const string &Help) {
     mHelp = Help;
 }
 
-uint32_t IArgument::getNArgs() const {
+int IArgument::getNArgs() const {
     return mNArgs;
 }
 
-void IArgument::setNArgs(uint32_t NArgs) {
+void IArgument::setNArgs(int NArgs) {
+    if (NArgs < NARGS::ONE_AND_MORE)
+        throw invalid_argument("NArgs cannot be negative");
     mNArgs = NArgs;
 }
 

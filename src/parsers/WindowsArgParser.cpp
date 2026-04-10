@@ -61,24 +61,33 @@ void WindowsArgParser::parse(int argc, const char *argv[]) const {
         string arg = argv[i];
 
         if (IsOptsAllowed) {
-            // End of options?
-            if (arg == "--" || arg == "/-") {
-                IsOptsAllowed = false;
-                printf("no more options\n");
-                continue;
-            }
+            // // End of options?
+            // if (arg == "--" || arg == "/-") {
+            //     IsOptsAllowed = false;
+            //     printf("no more options\n");
+            //     continue;
+            // }
 
-            // Option?
-            if (arg[0] == '/' && arg.length() > 1) {
-                // Option
-                printf("option\n");
-                continue;
+            // // Option?
+            // if (arg[0] == '/' && arg.length() > 1) {
+            //     // Option
+            //     printf("option\n");
+            //     continue;
+            // }
+
+            if (isArgOption(arg)) {
+                // Перебрать все опции, найти нужную,
+                // обработать
             }
         }
 
         // Positional argument
         printf("positional argument\n");
     }
+}
+
+bool WindowsArgParser::isArgOption(const string &Arg) const {
+    return (Arg.length() > 1 && Arg[0] == '/') || Arg == "--";
 }
 
 void WindowsArgParser::selfCopy([[maybe_unused]] const WindowsArgParser &Other) {}
