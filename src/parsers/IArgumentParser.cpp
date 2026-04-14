@@ -21,7 +21,7 @@ mOptions() {}
 
 IArgumentParser::~IArgumentParser() noexcept {}
 
-void IArgumentParser::addArgument(unique_ptr<IOption> &&Opt) {
+void IArgumentParser::addArgument(unique_ptr<IOption> Opt) {
     for (const auto &ExistingOpt : mOptions) {
         if (*Opt == *ExistingOpt)
             throw invalid_argument(""); // TODO: exception
@@ -31,6 +31,6 @@ void IArgumentParser::addArgument(unique_ptr<IOption> &&Opt) {
 
 void IArgumentParser::parse([[maybe_unused]] int argc, [[maybe_unused]] const char *argv[]) const {}
 
-bool IArgumentParser::isArgOption([[maybe_unused]] const string &Arg) const {
-    return false;
+const vector<unique_ptr<IOption>> &IArgumentParser::getOptions() const {
+    return mOptions;
 }

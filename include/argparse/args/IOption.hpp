@@ -173,7 +173,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual bool operator == (const IOption &Right) const;
+            bool operator == (const IOption &Right) const;
 
             /**
              * @brief Compares options flags
@@ -184,7 +184,7 @@ namespace argparse {
              * @version 1.0.0
              * @authors Eugene Azimut
              */
-            virtual bool operator != (const IOption &Right) const;
+            bool operator != (const IOption &Right) const;
 
         //* Getters and setters
             /**
@@ -243,7 +243,9 @@ namespace argparse {
             virtual void setFlags(Flags &&FlagsList);
 
         //* etc
-            virtual bool isEquals(const IOption &Other) const;
+            bool isEquals(const IOption &Other) const;
+
+            bool isMatch(const std::string &Opt) const;
 
         private:
             /**

@@ -63,7 +63,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual void addArgument(std::unique_ptr<args::IOption> &&Opt);
+        virtual void addArgument(std::unique_ptr<args::IOption> Opt);
 
         /**
          * @brief Parses given CLI arguments
@@ -77,7 +77,7 @@ namespace argparse {
         virtual void parse(int argc, const char *argv[]) const = 0;
 
     protected:
-        virtual bool isArgOption(const std::string &Arg) const = 0;
+        const std::vector<std::unique_ptr<args::IOption>> &getOptions() const;
 
     private:
     //* Deleted methods
@@ -94,7 +94,7 @@ namespace argparse {
         /**
          * @brief Move constructor
          * @details Creates new instance moving Other
-         * @param[in] Other Instance to move
+         * @param[in, out] Other Instance to move
          * @warning Explicitly deleted method!
          * @version 1.0.0
          * @authors Eugene Azimut
@@ -116,7 +116,7 @@ namespace argparse {
         /**
          * @brief Move assignment operator
          * @details Moves Right instance to current one
-         * @param[in] Right Instance to move
+         * @param[in, out] Right Instance to move
          * @returns Reference to current instance
          * @warning Explicitly deleted method!
          * @version 1.0.0

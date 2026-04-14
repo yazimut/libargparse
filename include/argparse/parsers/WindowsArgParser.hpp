@@ -36,59 +36,12 @@ namespace argparse {
         WindowsArgParser();
 
         /**
-         * @brief Copy constructor
-         * @details Creates new instance as a copy of Other
-         *
-         * @param[in] Other Instance to copy
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        WindowsArgParser(const WindowsArgParser &Other);
-
-        /**
-         * @brief Move constructor
-         * @details Creates new instance moving Other
-         *
-         * @param[in, out] Other Instance to move
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        WindowsArgParser(WindowsArgParser &&Other) noexcept;
-
-        /**
          * @brief Destroies instance
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
         virtual ~WindowsArgParser() noexcept;
-
-    //* Operators
-        /**
-         * @brief Copy assignment operator
-         * @details Copies Right instance to current one
-         *
-         * @param[in] Right Instance to copy
-         * @returns Reference to current instance
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        WindowsArgParser &operator = (const WindowsArgParser &Right);
-
-        /**
-         * @brief Move assignment operator
-         * @details Moves Right instance to current one
-         *
-         * @param[in] Right Instance to move
-         * @returns Reference to current instance
-         *
-         * @version 1.0.0
-         * @authors Eugene Azimut
-         */
-        WindowsArgParser &operator = (WindowsArgParser &&Right) noexcept;
 
     //* etc
         /**
@@ -103,11 +56,56 @@ namespace argparse {
         virtual void parse(int argc, const char *argv[]) const override;
 
     protected:
-        virtual bool isArgOption(const std::string &Arg) const override;
+        virtual bool isArgOption(const std::string &Arg) const;
+
+        virtual void splitOption(
+            const std::string &Opt,
+            std::string &Name,
+            std::string &Value
+        ) const;
 
     private:
-        void selfCopy(const WindowsArgParser &Other);
-        void selfMove(WindowsArgParser &&Other) noexcept;
+        /**
+         * @brief Copy constructor
+         * @details Creates new instance as a copy of Other
+         * @param[in] Other Instance to copy
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        WindowsArgParser(const WindowsArgParser &Other) = delete;
+
+        /**
+         * @brief Move constructor
+         * @details Creates new instance moving Other
+         * @param[in, out] Other Instance to move
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        WindowsArgParser(WindowsArgParser &&Other) noexcept = delete;
+
+        /**
+         * @brief Copy assignment operator
+         * @details Copies Right instance to current one
+         * @param[in] Right Instance to copy
+         * @returns Reference to current instance
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        WindowsArgParser &operator = (const WindowsArgParser &Right) = delete;
+
+        /**
+         * @brief Move assignment operator
+         * @details Moves Right instance to current one
+         * @param[in, out] Right Instance to move
+         * @returns Reference to current instance
+         * @warning Explicitly deleted method!
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        WindowsArgParser &operator = (WindowsArgParser &&Right) noexcept = delete;
 
     //* Variables
     };

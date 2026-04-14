@@ -217,9 +217,9 @@ namespace argparse {
             void selfMove(IArgument &&Other) noexcept;
 
         //* Variables
-            std::string mHelp;              ///< A brief description of what the argument does
-            int         mNArgs;             ///< The number of command-line arguments that should be consumed
             bool        mIsDeprecated;      ///< Whether or not use of the argument is deprecated
+            int         mNArgs;             ///< The number of command-line arguments that should be consumed
+            std::string mHelp;              ///< A brief description of what the argument does
         };
     }
 }

@@ -21,25 +21,25 @@ IArgument::IArgument(
     const string &Help,
     int NArgs,
     bool IsDeprecated):
-mHelp(""),
+mIsDeprecated(false),
 mNArgs(NARGS::NO_MORE),
-mIsDeprecated(false) {
-    setHelp(Help);
-    setNArgs(NArgs);
+mHelp("") {
     setDeprecated(IsDeprecated);
+    setNArgs(NArgs);
+    setHelp(Help);
 }
 
 IArgument::IArgument(const IArgument &Other):
-mHelp(""),
+mIsDeprecated(false),
 mNArgs(NARGS::NO_MORE),
-mIsDeprecated(false) {
+mHelp("") {
     selfCopy(Other);
 }
 
 IArgument::IArgument(IArgument &&Other) noexcept:
-mHelp(""),
+mIsDeprecated(false),
 mNArgs(NARGS::NO_MORE),
-mIsDeprecated(false) {
+mHelp("") {
     selfMove(move(Other));
 }
 
@@ -82,13 +82,13 @@ void IArgument::setDeprecated(bool IsDeprecated) {
 }
 
 void IArgument::selfCopy(const IArgument &Other) {
-    mHelp  = Other.mHelp;
-    mNArgs = Other.mNArgs;
     mIsDeprecated = Other.mIsDeprecated;
+    mNArgs = Other.mNArgs;
+    mHelp  = Other.mHelp;
 }
 
 void IArgument::selfMove(IArgument &&Other) noexcept {
-    mHelp  = move(Other.mHelp);
-    mNArgs = exchange_basic(Other.mNArgs, NARGS::NO_MORE);
     mIsDeprecated = exchange_basic(Other.mIsDeprecated, false);
+    mNArgs = exchange_basic(Other.mNArgs, NARGS::NO_MORE);
+    mHelp  = move(Other.mHelp);
 }

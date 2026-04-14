@@ -17,66 +17,38 @@
 
 using namespace std;
 using namespace argparse;
+using namespace argparse::args;
 
 
 
 WindowsArgParser::WindowsArgParser():
-IArgumentParser() {}
-
-WindowsArgParser::WindowsArgParser(const WindowsArgParser &Other):
-IArgumentParser(Other) {
-    selfCopy(Other);
-}
-
-WindowsArgParser::WindowsArgParser(WindowsArgParser &&Other) noexcept:
-IArgumentParser(move(Other)) {
-    selfMove(move(Other));
+IArgumentParser() {
+    // TODO: добавить маркер конца опций как опциональный аргумент
 }
 
 WindowsArgParser::~WindowsArgParser() noexcept {}
 
-WindowsArgParser &WindowsArgParser::operator = (const WindowsArgParser &Right) {
-    if (this != &Right) {
-        IArgumentParser::operator=(Right);
-        selfCopy(Right);
-    }
-
-    return *this;
-}
-
-WindowsArgParser &WindowsArgParser::operator = (WindowsArgParser &&Right) noexcept {
-    if (this != &Right) {
-        IArgumentParser::operator=(move(Right));
-        selfMove(move(Right));
-    }
-
-    return *this;
-}
-
 void WindowsArgParser::parse(int argc, const char *argv[]) const {
     bool IsOptsAllowed = true;
+    const vector<unique_ptr<IOption>> &Opts = getOptions();
 
     for (int i = 0; i < argc; ++i) {
         printf("argv[%d] \"%s\": ", i, argv[i]);
         string arg = argv[i];
 
         if (IsOptsAllowed) {
-            // // End of options?
-            // if (arg == "--" || arg == "/-") {
-            //     IsOptsAllowed = false;
-            //     printf("no more options\n");
-            //     continue;
-            // }
-
-            // // Option?
-            // if (arg[0] == '/' && arg.length() > 1) {
-            //     // Option
-            //     printf("option\n");
-            //     continue;
-            // }
-
             if (isArgOption(arg)) {
+                // Разделить аргумент на опцию и значение, если нужно
+
+
                 // Перебрать все опции, найти нужную,
+                for (const unique_ptr<IOption> &OptPtr : Opts) {
+                    IOption *Opt = OptPtr.get();
+                    if (Opt->isMatch("")) {
+                        // MATCH
+                    }
+                }
+
                 // обработать
             }
         }
@@ -90,6 +62,10 @@ bool WindowsArgParser::isArgOption(const string &Arg) const {
     return (Arg.length() > 1 && Arg[0] == '/') || Arg == "--";
 }
 
-void WindowsArgParser::selfCopy([[maybe_unused]] const WindowsArgParser &Other) {}
+void WindowsArgParser::splitOption(
+    const string &Option,
+    string &Name,
+    string &Value
+) const {
 
-void WindowsArgParser::selfMove([[maybe_unused]] WindowsArgParser &&Other) noexcept {}
+}

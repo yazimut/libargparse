@@ -108,6 +108,13 @@ bool IOption::isEquals(const IOption &Other) const {
     return false;
 }
 
+bool IOption::isMatch(const string &Opt) const {
+    for (const string &Flag : mFlags) {
+        if (Opt == Flag) return true;
+    }
+    return false;
+}
+
 void IOption::selfCopy(const IOption &Other) {
     mIsRequired = Other.mIsRequired;
     mFlags      = Other.mFlags;
