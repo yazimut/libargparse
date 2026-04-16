@@ -58,8 +58,20 @@ namespace argparse {
     protected:
         virtual bool isArgOption(const std::string &Arg) const;
 
-        virtual void splitOption(
-            const std::string &Opt,
+        /**
+         * @brief Splits an argument into an option name and its value
+         *
+         * @param[in] Arg Source argument
+         * @param[out] Name Destination of option name
+         * @param[out] Value Destination of option value
+         * @returns True if option value has been found (even if empty). \n
+         * See code examples in class header for details
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        virtual bool splitOption(
+            const std::string &Arg,
             std::string &Name,
             std::string &Value
         ) const;
