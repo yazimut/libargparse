@@ -47,7 +47,6 @@ namespace argparse {
              * @param[in] NArgs The number of command-line arguments that should be consumed.
              * See args::NARGS for special values
              *
-             * @param[in] IsRequired Whether or not the command-line option may be omitted (optionals only)
              * @param[in] IsDeprecated Whether or not use of the argument is deprecated
              *
              * @throw std::bad_alloc in case of memory allocation failure

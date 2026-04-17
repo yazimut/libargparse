@@ -13,7 +13,6 @@
 #include "../args/IOption.hpp"
 
 #include <memory>
-#include <string>
 #include <vector>
 #include <stdexcept>
 
@@ -52,12 +51,42 @@ namespace argparse {
 
     //* etc
         /**
+         * @brief Will parser find and handle CLI options?
+         * @returns true or false
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        inline bool isOptionsAllowed() const {
+            return mIsOptionsAllowed;
+        }
+
+        /**
+         * @brief Allowes parser to find and handle CLI options
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        inline void allowOptions() {
+            mIsOptionsAllowed = true;
+        }
+
+        /**
+         * @brief Disallowes parser to find and handle CLI options
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        inline void disallowOptions() {
+            mIsOptionsAllowed = false;
+        }
+
+        /**
          * @brief Add CLI option to parser
-         * @details Adds new CLI option to parser by moving instance to internal vector
          *
          * @param[in] Opt Option to add
          *
-         * @throw std::invalid_argument if there is already the same option in internal vector
+         * @throw std::invalid_argument if there is already the same option
          * @throw inherited from std::vector<T>::push_back(T &&)
          *
          * @version 1.0.0
@@ -66,7 +95,7 @@ namespace argparse {
         virtual void addArgument(std::unique_ptr<args::IOption> Opt);
 
         /**
-         * @brief Parses given CLI arguments
+         * @brief Parse given CLI arguments
          *
          * @param[in] argc Arguments count
          * @param[in] argv Arguments vector
@@ -74,10 +103,19 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual void parse(int argc, const char *argv[]) const = 0;
+        virtual void parse(int argc, const char *argv[]) = 0;
 
     protected:
-        const std::vector<std::unique_ptr<args::IOption>> &getOptions() const;
+        /**
+         * @brief Get defined CLI options list
+         * @returns Reference to the list of defined options
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
+        inline const std::vector<std::unique_ptr<args::IOption>> &getOptionsList() const {
+            return mOptions;
+        }
 
     private:
     //* Deleted methods
@@ -125,6 +163,7 @@ namespace argparse {
         IArgumentParser &operator = (IArgumentParser &&Right) noexcept = delete;
 
     //* Variables
-        std::vector<std::unique_ptr<args::IOption>> mOptions;      ///< List of CLI options
+        bool mIsOptionsAllowed;                                 ///< Will parser find and handle CLI options
+        std::vector<std::unique_ptr<args::IOption>> mOptions;   ///< List of CLI options
     };
 }

@@ -12,6 +12,8 @@
 #include "../api.hpp"
 #include "IArgumentParser.hpp"
 
+#include <string>
+
 
 
 namespace argparse {
@@ -41,7 +43,7 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual ~WindowsArgParser() noexcept;
+        virtual ~WindowsArgParser() noexcept override;
 
     //* etc
         /**
@@ -53,25 +55,36 @@ namespace argparse {
          * @version 1.0.0
          * @authors Eugene Azimut
          */
-        virtual void parse(int argc, const char *argv[]) const override;
+        virtual void parse(int argc, const char *argv[]) override;
 
     protected:
+        /**
+         * @brief Is given CLI argument an option?
+         *
+         * @param[in] Arg Argument to check
+         * @returns true or false
+         *
+         * @version 1.0.0
+         * @authors Eugene Azimut
+         */
         virtual bool isArgOption(const std::string &Arg) const;
 
         /**
-         * @brief Splits an argument into an option name and its value
+         * @brief Split given CLI option into a name and value
          *
-         * @param[in] Arg Source argument
-         * @param[out] Name Destination of option name
-         * @param[out] Value Destination of option value
-         * @returns True if option value has been found (even if empty). \n
-         * See code examples in class header for details
+         * @param[in] Opt Option to split
+         * @param[out] Name Extracted option name
+         * @param[out] Value Extracted option value
+         * @returns true if value has been extracted (even if it's empty), false if not
+         *
+         * @note In some cases (e.g. "/:" or "/:sometext")
+         * this method can return an empty string as an option name
          *
          * @version 1.0.0
          * @authors Eugene Azimut
          */
         virtual bool splitOption(
-            const std::string &Arg,
+            const std::string &Opt,
             std::string &Name,
             std::string &Value
         ) const;

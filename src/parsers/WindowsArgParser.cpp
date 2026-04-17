@@ -11,10 +11,6 @@
 #include <argparse/parsers/WindowsArgParser.hpp>
 #include "../helpers.hpp"
 
-#include <string>
-#include <utility>
-#include <iostream>
-
 using namespace std;
 using namespace argparse;
 using namespace argparse::args;
@@ -28,12 +24,11 @@ IArgumentParser() {
 
 WindowsArgParser::~WindowsArgParser() noexcept {}
 
-void WindowsArgParser::parse(int argc, const char *argv[]) const {
+void WindowsArgParser::parse(int argc, const char *argv[]) {
     bool IsOptsAllowed = true;
-    const vector<unique_ptr<IOption>> &Opts = getOptions();
+    const vector<unique_ptr<IOption>> &Opts = getOptionsList();
 
     for (int i = 0; i < argc; ++i) {
-        printf("argv[%d] \"%s\": ", i, argv[i]);
         string Arg = argv[i];
 
         if (IsOptsAllowed) {
@@ -55,7 +50,6 @@ void WindowsArgParser::parse(int argc, const char *argv[]) const {
         }
 
         // Positional argument
-        printf("positional argument\n");
     }
 }
 
@@ -74,6 +68,11 @@ bool WindowsArgParser::splitOption(
         * Arg[0] == '/'
     */
 
+    /*
+      Assuming, that Arg[1] - exactly a part of (or a full) option name. This is the most frequent
+      In other case Arg[1] == ':' - this is such a strange option name, that in most cases will throw an error.
+      Value in such situatuion does not matter anyway
+    */
     size_t ValDelimPos = Arg.find(':', 2);
     Value = ValDelimPos != string::npos ? Arg.substr(ValDelimPos + 1) : "";
 

@@ -17,7 +17,7 @@ using namespace argparse::args;
 
 
 IArgumentParser::IArgumentParser():
-mOptions() {}
+mIsOptionsAllowed(true), mOptions() {}
 
 IArgumentParser::~IArgumentParser() noexcept {}
 
@@ -29,8 +29,4 @@ void IArgumentParser::addArgument(unique_ptr<IOption> Opt) {
     mOptions.push_back(std::move(Opt));
 }
 
-void IArgumentParser::parse([[maybe_unused]] int argc, [[maybe_unused]] const char *argv[]) const {}
-
-const vector<unique_ptr<IOption>> &IArgumentParser::getOptions() const {
-    return mOptions;
-}
+void IArgumentParser::parse([[maybe_unused]] int argc, [[maybe_unused]] const char *argv[]) {}
