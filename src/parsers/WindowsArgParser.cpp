@@ -35,13 +35,24 @@ void WindowsArgParser::parse(int argc, const char *argv[]) {
             if (isArgOption(Arg)) {
                 string OptName  = "";
                 string OptValue = "";
-                splitOption(Arg, OptName, OptValue);
+                bool IsValueExtracted = splitOption(Arg, OptName, OptValue);
 
-                // Перебрать все опции, найти нужную,
-                for (const unique_ptr<IOption> &OptPtr : Opts) {
-                    IOption *Opt = OptPtr.get();
-                    if (Opt->isMatch(OptName)) {
+                // Перебрать все опции, найти нужную
+                for (size_t i = 0; i < Opts.size(); ++i) {
+                    IOption &Opt = *(Opts[i].get());
+                    if (Opt.isMatch(OptName)) {
                         // MATCH
+                        // Теперь нужно запустить обработчик
+                        // с каким-то образом найденными аргументами
+                        vector<string> Values;
+                        if (IsValueExtracted) {
+                            // Значение взяли прямо из флага
+                            Values.push_back(OptValue);
+                        } else {
+                            // Значения надо найти из аргументов,
+                            // если требуется
+                            int ValsRequired = Opt.getNArgs();
+                        }
                     }
                 }
 
@@ -68,12 +79,7 @@ bool WindowsArgParser::splitOption(
         * Arg[0] == '/'
     */
 
-    /*
-      Assuming, that Arg[1] - exactly a part of (or a full) option name. This is the most frequent
-      In other case Arg[1] == ':' - this is such a strange option name, that in most cases will throw an error.
-      Value in such situatuion does not matter anyway
-    */
-    size_t ValDelimPos = Arg.find(':', 2);
+    size_t ValDelimPos = Arg.find(':', 1);
     Value = ValDelimPos != string::npos ? Arg.substr(ValDelimPos + 1) : "";
 
     Name = Arg.substr(static_cast<size_t>(1), ValDelimPos - 1);
